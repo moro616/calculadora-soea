@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Sueldo · SOEA Aceiteros San Lorenzo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Paleta tomada del logo SOEA */
+    --azul:#1d3a6b;        /* azul marino del recuadro */
+    --azul-2:#16305c;
+    --azul-claro:#2e539a;
+    --verde:#3aa935;       /* verde silos */
+    --verde-2:#2f8a2c;
+    --verde-claro:#7cc242; /* gota de aceite */
+    --crema:#f5f7fb;
+    --crema-2:#eaeef6;
+    --linea:#d6deea;
+    --rojo:#c0392b;
+    --rojo-claro:#f3b4ac;
+    
+    --gris:#5d6675;
+    --gris-2:#8a93a3;
+    --tinta:#16223a;
+    --radius:16px;
+    --sombra:0 8px 26px rgba(29,58,107,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1100px 600px at 100% -15%, rgba(58,169,53,.10), transparent 55%),
+      radial-gradient(800px 600px at -15% 115%, rgba(29,58,107,.10), transparent 55%),
+      var(--crema);
+    color:var(--tinta);line-height:1.45;min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 16px 70px}
+  @media(min-width:640px){.wrap{padding:0 24px 80px}}
+
+  /* HERO */
+  header.hero{
+    position:relative;overflow:hidden;color:#fff;
+    background:linear-gradient(150deg,var(--azul) 0%,var(--azul-2) 100%);
+    border-radius:0 0 30px 30px;padding:28px 22px 32px;
+    box-shadow:0 16px 38px rgba(22,48,92,.26);
+  }
+  header.hero::before{
+    content:"";position:absolute;right:-80px;top:-90px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(58,169,53,.28),transparent 66%);
+  }
+  header.hero::after{
+    content:"";position:absolute;left:-50px;bottom:-100px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(124,194,66,.26),transparent 70%);
+  }
+  .hero-in{position:relative;z-index:1;max-width:780px;margin:0 auto;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .logo{flex:0 0 auto;width:76px;height:76px;border-radius:14px;background:#fff;
+    padding:6px;object-fit:contain;box-shadow:0 6px 16px rgba(0,0,0,.22)}
+  @media(max-width:420px){
+    .hero-in{gap:14px}
+    .logo{width:62px;height:62px}
+  }
+  .hero-txt{flex:1;min-width:200px}
+  .badge{
+    display:inline-flex;align-items:center;gap:9px;font-size:.68rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--verde-claro);font-weight:700;margin-bottom:8px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);
+    box-shadow:0 0 0 4px rgba(124,194,66,.22)}
+  header.hero h1{
+    font-family:"Fraunces",serif;font-weight:800;font-size:1.9rem;line-height:1.05;
+    letter-spacing:-.015em;
+  }
+  @media(min-width:640px){header.hero h1{font-size:2.3rem}}
+  header.hero p{color:#c3d0e6;font-size:.92rem;margin-top:9px;max-width:50ch}
+
+  .card{
+    background:#fff;border:1px solid var(--linea);border-radius:var(--radius);
+    padding:20px;margin-top:18px;box-shadow:var(--sombra);
+  }
+  .card h2{
+    font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;color:var(--azul-claro);
+    font-weight:800;display:flex;align-items:center;gap:11px;margin-bottom:18px;
+  }
+  .card h2 .num{
+    width:26px;height:26px;border-radius:8px;background:var(--azul);color:#fff;
+    display:grid;place-items:center;font-size:.76rem;font-weight:800;flex:0 0 auto;
+    font-family:"Fraunces",serif;
+  }
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:.76rem;font-weight:700;color:var(--gris);margin-bottom:7px}
+  select,input[type=number]{
+    width:100%;padding:12px 13px;border:1.5px solid var(--linea);border-radius:11px;
+    font-size:1rem;background:var(--crema);color:var(--tinta);font-weight:600;
+    font-family:inherit;transition:border-color .15s,box-shadow .15s,background .15s;
+    appearance:none;-webkit-appearance:none;
+  }
+  select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231d3a6b' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:38px;
+  }
+  select:focus,input:focus{outline:none;border-color:var(--verde);
+    background:#fff;box-shadow:0 0 0 3.5px rgba(58,169,53,.16)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{
+    border:1.5px solid var(--linea);background:var(--crema);border-radius:999px;
+    padding:9px 16px;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--gris);
+    transition:all .15s;user-select:none;-webkit-tap-highlight-color:transparent;
+    font-family:inherit;-webkit-appearance:none;appearance:none;outline:none;
+    touch-action:manipulation;line-height:normal;
+  }
+  .chip:hover{border-color:var(--gris-2)}
+  .chip.on{background:var(--azul);border-color:var(--azul);color:#fff;
+    box-shadow:0 4px 12px rgba(29,58,107,.20)}
+
+  .switch-row{display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:13px 0;border-top:1px dashed var(--linea);flex-wrap:wrap}
+  .switch-row > div:first-child{flex:1;min-width:0}
+  .switch-row:first-of-type{border-top:none;padding-top:4px}
+  .switch-row .t{font-weight:700;font-size:.94rem;color:var(--tinta)}
+  .switch-row .s{font-size:.76rem;color:var(--gris);margin-top:2px}
+  .toggle{position:relative;width:50px;height:28px;flex:0 0 auto}
+  .toggle input{opacity:0;width:0;height:0}
+  .track{position:absolute;inset:0;background:#c4cdda;border-radius:999px;
+    transition:.2s;cursor:pointer}
+  .track::before{content:"";position:absolute;height:22px;width:22px;left:3px;top:3px;
+    background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .toggle input:checked + .track{background:var(--verde)}
+  .toggle input:checked + .track::before{transform:translateX(22px)}
+  .num-mini{width:84px;max-width:84px;text-align:center;flex:0 0 auto}
+  .hint{font-size:.73rem;color:var(--gris-2);margin-top:7px;line-height:1.4}
+
+  /* RESULTADO */
+  .result{
+    background:linear-gradient(155deg,var(--azul),var(--azul-2));color:#fff;
+    border-radius:20px;margin-top:24px;overflow:hidden;
+    box-shadow:0 18px 42px rgba(22,48,92,.28);
+  }
+  .result .top{padding:24px 22px 8px}
+  .result .top .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--verde-claro);font-weight:700}
+  .neto{font-family:"Fraunces",serif;font-size:2.7rem;font-weight:800;letter-spacing:-.02em;
+    line-height:1.02;margin-top:6px}
+  @media(max-width:380px){.neto{font-size:2.2rem}}
+  .neto .cents{font-size:1.35rem;opacity:.6}
+  .result .sub{font-size:.82rem;color:#bccae2;margin-top:6px}
+
+  .breakdown{background:rgba(255,255,255,.05);padding:8px 22px 20px}
+  .ln{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;
+    padding:10px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+  .ln:last-child{border-bottom:none}
+  .ln .k{color:#cdd7ea;min-width:0;overflow-wrap:anywhere}
+  .ln .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;flex:0 0 auto}
+  .ln.add .v{color:var(--verde-claro)}
+  .ln.sub .v{color:var(--rojo-claro)}
+  .ln.total{margin-top:8px;padding-top:14px;border-top:2px solid rgba(124,194,66,.4);font-size:1.02rem}
+  .ln.total .k{font-weight:800;color:#fff}
+  .ln.total .v{font-weight:800;font-size:1.12rem}
+  .ln.grand{margin-top:4px}
+  .ln.grand .k{font-family:"Fraunces",serif}
+  .ln.grand .v{color:var(--verde-claro);font-size:1.2rem}
+  .group-title{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--verde-claro);font-weight:800;margin:16px 0 2px;padding-top:8px}
+
+  .ref{
+    margin-top:18px;background:var(--crema-2);border:1px solid var(--linea);
+    border-left:4px solid var(--verde);border-radius:10px;padding:13px 15px;
+    font-size:.78rem;color:var(--gris);line-height:1.5;
+  }
+  .ref b{color:var(--azul)}
+
+  details{margin-top:14px;background:var(--crema-2);border-radius:12px;
+    padding:14px 16px;border:1px solid var(--linea)}
+  summary{font-weight:700;font-size:.86rem;cursor:pointer;color:var(--azul-claro);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ ";font-weight:800}
+  details[open] summary::before{content:"– "}
+  details p{font-size:.8rem;color:var(--gris);margin-top:10px;line-height:1.55}
+  details p b{color:var(--tinta)}
+
+  footer{text-align:center;margin-top:30px}
+  .ig{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+    background:#fff;border:1px solid var(--linea);border-radius:999px;
+    padding:10px 18px;font-weight:700;color:var(--azul);font-size:.9rem;
+    box-shadow:var(--sombra);transition:transform .15s,box-shadow .15s;
+  }
+  .ig:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(29,58,107,.16)}
+  .ig svg{width:19px;height:19px}
+  .copyright{font-size:.74rem;color:var(--gris-2);margin-top:18px;line-height:1.7}
+  .copyright b{color:var(--gris)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <!-- Logo SOEA recreado en SVG -->
+    <img class="logo" src="data:image/jpeg;base64,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" alt="SOEA Aceiteros San Lorenzo">
+    <div class="hero-txt">
+      <div class="badge"><span class="dot"></span>SOEA · Aceiteros San Lorenzo</div>
+      <h1>Calculadora de sueldo</h1>
+      <p>Estimá tu neto de bolsillo con la escala 2026: categoría, antigüedad, adicionales, horas extra, feriados y Ganancias.</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="card">
+    <h2><span class="num">1</span>Tu liquidación</h2>
+    <div class="grid">
+      <div>
+        <label for="mes">Mes a calcular</label>
+        <select id="mes">
+          <option value="jul">Julio – Agosto 2026</option>
+          <option value="sep">Septiembre – Noviembre 2026</option>
+          <option value="dic">Diciembre 2026</option>
+        </select>
+        <div class="hint">Cada período mantiene el mismo básico de la paritaria.</div>
+      </div>
+      <div>
+        <label for="cat">Categoría</label>
+        <select id="cat">
+          <option value="A">A</option><option value="B">B</option>
+          <option value="C" selected>C</option><option value="D">D</option>
+          <option value="E">E</option><option value="F">F</option>
+        </select>
+      </div>
+      <div>
+        <label for="ant">Años de antigüedad</label>
+        <input type="number" id="ant" min="0" max="50" step="1" value="14" inputmode="numeric">
+        <div class="hint">1% del básico conformado por año.</div>
+      </div>
+      <div>
+        <label for="empresa">Adicional empresa (%)</label>
+        <input type="number" id="empresa" min="0" step="0.01" value="8.42" inputmode="decimal">
+        <div class="hint">En tu recibo da ~8,42% del básico. Editable.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">2</span>Adicionales sobre básico</h2>
+    <label>Turnos rotativos</label>
+    <div class="chips" id="turnos">
+      <button type="button" class="chip on" data-v="0">Sin turnos</button>
+      <button type="button" class="chip" data-v="18">18%</button>
+      <button type="button" class="chip" data-v="30">30%</button>
+    </div>
+    <label style="margin-top:18px">Título</label>
+    <div class="chips" id="titulo">
+      <button type="button" class="chip on" data-v="0">Sin título</button>
+      <button type="button" class="chip" data-v="3">3%</button>
+      <button type="button" class="chip" data-v="6">6%</button>
+    </div>
+    <div class="switch-row" style="margin-top:16px;border-top:1px dashed var(--linea);padding-top:14px">
+      <div><div class="t">Presentismo</div><div class="s">Suma fija según el mes</div></div>
+      <label class="toggle"><input type="checkbox" id="presentismo" checked><span class="track"></span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">3</span>Horas extras y feriados</h2>
+    <div class="grid">
+      <div>
+        <label for="he100">Horas extra 100%</label>
+        <input type="number" id="he100" min="0" step="0.5" value="0" inputmode="decimal">
+        <div class="hint">Domingo, feriado, sáb después de 13h.</div>
+      </div>
+      <div>
+        <label for="he50">Horas extra 50%</label>
+        <input type="number" id="he50" min="0" step="0.5" value="0" inputmode="decimal">
+        <div class="hint">Días hábiles fuera de jornada.</div>
+      </div>
+      <div>
+        <label for="feriados">Feriados trabajados (jornadas)</label>
+        <input type="number" id="feriados" min="0" max="20" step="1" value="0" inputmode="numeric">
+        <div class="hint">Jornada de 8h pagada al 100% (doble).</div>
+      </div>
+    </div>
+    <div class="hint" id="vhora" style="margin-top:12px;font-weight:700;color:var(--verde-2)"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">4</span>Situación familiar</h2>
+    <div class="switch-row">
+      <div><div class="t">Casado/a o conviviente</div><div class="s">Deduce cónyuge a cargo en Ganancias</div></div>
+      <label class="toggle"><input type="checkbox" id="casado"><span class="track"></span></label>
+    </div>
+    <div class="switch-row">
+      <div><div class="t">Hijos a cargo</div><div class="s">Menores de 24 años · deducción por hijo</div></div>
+      <input type="number" id="hijos" class="num-mini" min="0" max="12" step="1" value="0" inputmode="numeric">
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">5</span>Deducciones</h2>
+    <div class="switch-row">
+      <div><div class="t">Aportes de ley (17%)</div><div class="s">Jubilación 11% · INSSJP 3% · Obra social 3%</div></div>
+      <label class="toggle"><input type="checkbox" id="d_ley" checked><span class="track"></span></label>
+    </div>
+    <div class="switch-row">
+      <div><div class="t">Cuota sindical SOEA</div><div class="s">Sindical 2% + seguro sepelio 1,5%</div></div>
+      <label class="toggle"><input type="checkbox" id="d_soea" checked><span class="track"></span></label>
+    </div>
+    <div class="switch-row">
+      <div><div class="t">Retención 40% art.51</div><div class="s">Solo sobre el 10% NR de jul-26</div></div>
+      <label class="toggle"><input type="checkbox" id="d_ret"><span class="track"></span></label>
+    </div>
+    <div class="switch-row">
+      <div><div class="t">Impuesto a las Ganancias</div><div class="s">Cálculo automático (escala 2026)</div></div>
+      <label class="toggle"><input type="checkbox" id="d_gan" checked><span class="track"></span></label>
+    </div>
+  </section>
+
+  <section class="result" id="result"></section>
+
+  <div class="ref">
+    <b>Valores de referencia tomados de la tabla</b> de la Nueva Escala Salarial SOEA San Lorenzo 2026 y de las deducciones de ARCA vigentes para el 1er semestre 2026. Es una estimación orientativa; los importes pueden diferir del recibo oficial.
+  </div>
+
+  <details>
+    <summary>¿De dónde salen los números?</summary>
+    <p><b>Escala salarial:</b> básicos conformados, NR y presentismo de la Nueva Escala SOEA San Lorenzo 2026. Julio y septiembre llevan incremento <b>no remunerativo</b> (10% y 6%); diciembre es todo remunerativo con sus adicionales de acuerdo.</p>
+    <p><b>Adicionales:</b> antigüedad 1%/año, turnos 18%/30%, título 3%/6%, sobre el básico conformado.</p>
+    <p><b>Horas extra:</b> valor hora = bruto remunerativo ÷ 172. Al 50% se paga ×1,5; al 100% (y feriados) ×2.</p>
+    <p><b>Aportes</b> calibrados con recibo Vicentin: Jubilación 11%, INSSJP 3%, Obra social 3%, Cuota sindical 2%, Seguro sepelio 1,5%.</p>
+    <p><b>Ganancias (4ta cat.):</b> escala progresiva Art.94 y deducciones personales del 1er semestre 2026 (mínimo no imponible, deducción especial de empleados, cónyuge, hijos). Cálculo mensualizado; la liquidación oficial es acumulada anual y puede incluir otras deducciones (SIRADIG, alquiler, prepaga).</p>
+  </details>
+
+  <footer>
+    <a class="ig" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      @metricslab.agency
+    </a>
+    <div class="copyright">
+      © 2026 Calculadora de Sueldo Aceiteros · Todos los derechos reservados.<br>
+      Desarrollado por <b>Lucas Morosin</b> · Herramienta independiente, no oficial del SOEA.
+    </div>
+  </footer>
+</div>
+
+<script>
+const fmt = n => "$ " + n.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
+
+const ESCALA = {
+  jul:{nombre:"Julio – Agosto 2026", nr:0.10, remunerativo:false, pres:256152,
+    A:2400038,B:2576514,C:2792668,D:3020618,E:3734098,F:4059415,
+    ret:{A:48000,B:51500,C:55850,D:60400,E:74682,F:81189}},
+  sep:{nombre:"Septiembre – Noviembre 2026", nr:0.06, remunerativo:false, pres:270123,
+    A:2640042,B:2834165,C:3071935,D:3322680,E:4107508,F:4465357, ret:null},
+  dic:{nombre:"Diciembre 2026", nr:0, remunerativo:true, pres:270123,
+    A:2698368,B:2896804,C:3139475,D:3396255,E:4141925,F:4507841,
+    adic1:44349, adic2:{A:41327,B:47603,C:55671,D:63313,E:145280,F:156741}, ret:null}
+};
+
+const GAN = {
+  mni: 5151802.50/12,
+  conyuge: 4851964.66/12,
+  hijo: 2446863.48/12,
+  espEmpleado: 24728652.02/12
+};
+const TRAMOS = [
+  {hasta:2000030.09,  fijo:0,           pct:0.05},
+  {hasta:4000060.18,  fijo:100001.50,   pct:0.09},
+  {hasta:6000090.27,  fijo:280004.21,   pct:0.12},
+  {hasta:8000120.37,  fijo:520007.82,   pct:0.15},
+  {hasta:12000180.55, fijo:820012.34,   pct:0.19},
+  {hasta:18000270.83, fijo:1580023.78,  pct:0.23},
+  {hasta:24000361.10, fijo:2960044.51,  pct:0.27},
+  {hasta:36000541.66, fijo:4580068.06,  pct:0.31},
+  {hasta:Infinity,    fijo:8300148.23,  pct:0.35}
+];
+
+function calcGanancias(netoMensual, casado, hijos){
+  let ded = GAN.mni + GAN.espEmpleado;
+  if(casado) ded += GAN.conyuge;
+  ded += hijos * GAN.hijo;
+  const baseAnual = (netoMensual - ded) * 12;
+  if(baseAnual <= 0) return 0;
+  let imp = 0;
+  for(let i=0;i<TRAMOS.length;i++){
+    const t = TRAMOS[i];
+    const pisoPrev = i===0 ? 0 : TRAMOS[i-1].hasta;
+    if(baseAnual <= t.hasta){ imp = t.fijo + (baseAnual - pisoPrev)*t.pct; break; }
+  }
+  return imp/12;
+}
+
+let turnoSel=0, tituloSel=0;
+function setupChips(id,cb){
+  document.querySelectorAll("#"+id+" .chip").forEach(c=>{
+    c.addEventListener("click",()=>{
+      document.querySelectorAll("#"+id+" .chip").forEach(x=>x.classList.remove("on"));
+      c.classList.add("on"); cb(parseFloat(c.dataset.v));
+    });
+  });
+}
+setupChips("turnos",v=>{turnoSel=v;calc();});
+setupChips("titulo",v=>{tituloSel=v;calc();});
+
+function calc(){
+  const mes=document.getElementById("mes").value;
+  const cat=document.getElementById("cat").value;
+  const d=ESCALA[mes]; const basico=d[cat];
+  const ant=+document.getElementById("ant").value||0;
+  const empresaPct=(+document.getElementById("empresa").value||0)/100;
+
+  const antiguedad=basico*0.01*ant;
+  const turnos=basico*(turnoSel/100);
+  const titulo=basico*(tituloSel/100);
+  const empresa=basico*empresaPct;
+  const presentismo=document.getElementById("presentismo").checked?d.pres:0;
+  let adicFijos=0;
+  if(d.remunerativo) adicFijos=(d.adic1||0)+(d.adic2?d.adic2[cat]:0);
+
+  const haberes=[
+    {k:"Básico conformado",v:basico},
+    {k:`Antigüedad (${ant} años · 1%)`,v:antiguedad}
+  ];
+  if(turnoSel)haberes.push({k:`Turnos rotativos (${turnoSel}%)`,v:turnos});
+  if(tituloSel)haberes.push({k:`Título (${tituloSel}%)`,v:titulo});
+  if(empresa>0)haberes.push({k:"Adicional empresa",v:empresa});
+  if(adicFijos>0)haberes.push({k:"Adicionales de acuerdo",v:adicFijos});
+  if(presentismo)haberes.push({k:"Presentismo",v:presentismo});
+
+  const brutoRemun=basico+antiguedad+turnos+titulo+empresa+adicFijos+presentismo;
+
+  const divisor=172;
+  const valorHora=brutoRemun/divisor;
+  const he100q=+document.getElementById("he100").value||0;
+  const he50q=+document.getElementById("he50").value||0;
+  const feriados=+document.getElementById("feriados").value||0;
+  const montoHE100=valorHora*2*he100q;
+  const montoHE50=valorHora*1.5*he50q;
+  const montoFeriados=valorHora*2*8*feriados;
+  document.getElementById("vhora").textContent=
+    "Valor hora normal: "+fmt(valorHora)+"  ·  hora al 100%: "+fmt(valorHora*2);
+
+  if(montoHE50>0)haberes.push({k:`Horas extra 50% (${he50q}h)`,v:montoHE50});
+  if(montoHE100>0)haberes.push({k:`Horas extra 100% (${he100q}h)`,v:montoHE100});
+  if(montoFeriados>0)haberes.push({k:`Feriados trabajados (${feriados} jorn.)`,v:montoFeriados});
+
+  const totalExtras=montoHE100+montoHE50+montoFeriados;
+  const brutoConExtras=brutoRemun+totalExtras;
+
+  const nrMonto=brutoConExtras*d.nr;
+  if(d.nr>0)haberes.push({k:`Incremento NR (${(d.nr*100).toFixed(0)}%)`,v:nrMonto});
+  const totalBruto=brutoConExtras+nrMonto;
+
+  const ded=[]; const baseAportes=brutoConExtras;
+  let aportesLey=0;
+  if(document.getElementById("d_ley").checked){
+    const j=baseAportes*0.11, i=baseAportes*0.03, os=baseAportes*0.03;
+    ded.push({k:"Jubilación (11%)",v:j});
+    ded.push({k:"INSSJP / Ley 19032 (3%)",v:i});
+    ded.push({k:"Obra social (3%)",v:os});
+    aportesLey+=j+i+os;
+  }
+  if(document.getElementById("d_soea").checked){
+    const cs=baseAportes*0.02, ss=baseAportes*0.015;
+    ded.push({k:"Cuota sindical SOEA (2%)",v:cs});
+    ded.push({k:"Seguro sepelio (1,5%)",v:ss});
+    aportesLey+=cs+ss;
+  }
+  if(document.getElementById("d_ret").checked && d.ret){
+    ded.push({k:"Retención 40% art.51",v:d.ret[cat]});
+  }
+  if(document.getElementById("d_gan").checked){
+    const casado=document.getElementById("casado").checked;
+    const hijos=+document.getElementById("hijos").value||0;
+    const netoSujeto=brutoConExtras - aportesLey;
+    const g=calcGanancias(netoSujeto,casado,hijos);
+    if(g>0) ded.push({k:"Impuesto a las Ganancias",v:g});
+    else ded.push({k:"Impuesto a las Ganancias",v:0,exento:true});
+  }
+
+  const totalDed=ded.reduce((a,b)=>a+(b.v||0),0);
+  const neto=totalBruto-totalDed;
+  render(d,cat,haberes,ded,totalBruto,totalDed,neto);
+}
+
+function render(d,cat,haberes,ded,bruto,totalDed,neto){
+  const netoStr=neto.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const [ent,cent]=netoStr.split(",");
+  let h=`<div class="top">
+      <div class="lbl">Neto estimado · ${d.nombre} · Cat. ${cat}</div>
+      <div class="neto">$ ${ent}<span class="cents">,${cent}</span></div>
+      <div class="sub">Bruto ${fmt(bruto)} − deducciones ${fmt(totalDed)}</div>
+    </div>
+    <div class="breakdown">
+      <div class="group-title">Haberes</div>`;
+  haberes.forEach(x=>h+=`<div class="ln add"><span class="k">${x.k}</span><span class="v">${fmt(x.v)}</span></div>`);
+  h+=`<div class="ln total"><span class="k">Total bruto</span><span class="v">${fmt(bruto)}</span></div>
+      <div class="group-title">Deducciones</div>`;
+  ded.forEach(x=>{
+    if(x.exento){
+      h+=`<div class="ln sub"><span class="k">${x.k}</span><span class="v" style="color:#9fc79a">Exento</span></div>`;
+    }else{
+      h+=`<div class="ln sub"><span class="k">${x.k}</span><span class="v">− ${fmt(x.v)}</span></div>`;
+    }
+  });
+  h+=`<div class="ln total"><span class="k">Total deducciones</span><span class="v">− ${fmt(totalDed)}</span></div>
+      <div class="ln total grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(neto)}</span></div>
+    </div>`;
+  document.getElementById("result").innerHTML=h;
+}
+
+["mes","cat","ant","empresa","he100","he50","feriados","presentismo","casado","hijos","d_ley","d_soea","d_ret","d_gan"]
+  .forEach(id=>{const el=document.getElementById(id);el.addEventListener("input",calc);el.addEventListener("change",calc);});
+calc();
+</script>
+</body>
+</html>
