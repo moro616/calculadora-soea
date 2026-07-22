@@ -197,6 +197,48 @@
   .ig svg{width:19px;height:19px}
   .copyright{font-size:.74rem;color:var(--gris-2);margin-top:18px;line-height:1.7}
   .copyright b{color:var(--gris)}
+  /* ===== Mejoras visuales + responsive extra ===== */
+  .card{transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+                    background:linear-gradient(90deg,var(--verde),var(--azul-claro))}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(29,58,107,.16)}
+  .card h2 .num{background:linear-gradient(150deg,var(--azul),var(--azul-claro));
+                    box-shadow:0 4px 10px rgba(29,58,107,.35)}
+  .chip{transition:transform .15s ease, border-color .15s ease, background .15s ease, color .15s ease}
+  .chip.on{transform:translateY(-1px)}
+  .toggle .track{box-shadow:inset 0 1px 3px rgba(0,0,0,.14)}
+  select:hover,input[type=number]:hover{border-color:var(--gris-2)}
+  .result{position:relative}
+  .result::after{content:"";position:absolute;inset:0;pointer-events:none;
+                     background:radial-gradient(520px 220px at 92% -12%, rgba(124,194,66,.18), transparent 62%)}
+  @keyframes pulseResult{0%{transform:scale(1)}30%{transform:scale(1.012)}100%{transform:scale(1)}}
+  .result.pulse{animation:pulseResult .45s ease}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  .card,.ref,details,footer{animation:fadeInUp .55s ease both}
+  .card:nth-of-type(1){animation-delay:.02s}
+  .card:nth-of-type(2){animation-delay:.08s}
+  .card:nth-of-type(3){animation-delay:.14s}
+  .card:nth-of-type(4){animation-delay:.20s}
+  .card:nth-of-type(5){animation-delay:.26s}
+  .ref{animation-delay:.30s}
+  details{animation-delay:.34s}
+  footer{animation-delay:.4s}
+  @media (prefers-reduced-motion: reduce){
+        .card,.ref,details,footer,.result.pulse{animation:none !important}
+        .card:hover{transform:none}
+  }
+  @media(max-width:360px){
+        .wrap{padding-left:12px;padding-right:12px}
+        header.hero{padding:22px 16px 26px}
+        header.hero h1{font-size:1.6rem}
+        .card{padding:16px}
+        .neto{font-size:2rem}
+        .chip{padding:8px 13px;font-size:.8rem}
+        .num-mini{width:70px}
+  }
+  @media(min-width:900px){
+        .wrap{max-width:860px}
+  }
 </style>
 </head>
 <body>
@@ -513,7 +555,7 @@ function render(d,cat,haberes,ded,bruto,totalDed,neto){
   h+=`<div class="ln total"><span class="k">Total deducciones</span><span class="v">− ${fmt(totalDed)}</span></div>
       <div class="ln total grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(neto)}</span></div>
     </div>`;
-  document.getElementById("result").innerHTML=h;
+  const resEl=document.getElementById("result"); resEl.innerHTML=h; resEl.classList.remove("pulse"); void resEl.offsetWidth; resEl.classList.add("pulse");
 }
 
 ["mes","cat","ant","empresa","he100","he50","feriados","presentismo","casado","hijos","d_ley","d_soea","d_ret","d_gan"]
