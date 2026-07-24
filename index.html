@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Sueldo · SOEA Aceiteros San Lorenzo</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LE1KJJF4CW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LE1KJJF4CW');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -496,7 +504,11 @@ function calc(){
   const totalExtras=montoHE100+montoHE50+montoFeriados;
   const brutoConExtras=brutoRemun+totalExtras;
 
-  const nrMonto=brutoConExtras*d.nr;
+  // El incremento NR "impacta adicionales": se aplica SOLO sobre básico + antigüedad
+  // + turnos + título + adicional empresa. El presentismo (suma fija) y las horas
+  // extra NO reciben el aumento.
+  const nrBase=basico+antiguedad+turnos+titulo+empresa;
+  const nrMonto=nrBase*d.nr;
   if(d.nr>0)haberes.push({k:`Incremento NR (${(d.nr*100).toFixed(0)}%)`,v:nrMonto});
   const totalBruto=brutoConExtras+nrMonto;
 
