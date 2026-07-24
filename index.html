@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Sueldo · SOEA Aceiteros San Lorenzo</title>
+<!-- Tema claro/oscuro: se aplica antes de pintar para evitar parpadeo -->
+<script>(function(){try{var t=localStorage.getItem('tema');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LE1KJJF4CW"></script>
 <script>
@@ -24,8 +26,8 @@
     --verde:#3aa935;       /* verde silos */
     --verde-2:#2f8a2c;
     --verde-claro:#7cc242; /* gota de aceite */
-    --crema:#f5f7fb;
-    --crema-2:#eaeef6;
+    --crema:#eaf1fb;       /* fondo celeste muy suave */
+    --crema-2:#dfe9f7;
     --linea:#d6deea;
     --rojo:#c0392b;
     --rojo-claro:#f3b4ac;
@@ -35,7 +37,35 @@
     --tinta:#16223a;
     --radius:16px;
     --sombra:0 8px 26px rgba(29,58,107,.10);
+    --card:#ffffff;
   }
+  /* ===== Modo oscuro ===== */
+  :root[data-theme="dark"]{
+    --azul:#213f74;
+    --azul-2:#152a4d;
+    --azul-claro:#7aa9ee;
+    --verde:#3aa935;
+    --verde-2:#2f8a2c;
+    --verde-claro:#8ed05a;
+    --crema:#0e1626;        /* fondo oscuro */
+    --crema-2:#182338;
+    --linea:#2a3a58;
+    --gris:#a6b2c7;
+    --gris-2:#7b8aa2;
+    --tinta:#e7edf7;        /* texto claro */
+    --card:#16223c;
+    --sombra:0 8px 26px rgba(0,0,0,.35);
+  }
+  :root[data-theme="dark"] body{
+    background:
+      radial-gradient(1100px 600px at 100% -15%, rgba(58,169,53,.14), transparent 55%),
+      radial-gradient(800px 600px at -15% 115%, rgba(46,83,154,.22), transparent 55%),
+      var(--crema);
+  }
+  :root[data-theme="dark"] select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237aa9ee' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  }
+  :root[data-theme="dark"] .track{background:#3a4a66}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
@@ -88,7 +118,7 @@
   header.hero p{color:#c3d0e6;font-size:.92rem;margin-top:9px;max-width:50ch}
 
   .card{
-    background:#fff;border:1px solid var(--linea);border-radius:var(--radius);
+    background:var(--card);border:1px solid var(--linea);border-radius:var(--radius);
     padding:20px;margin-top:18px;box-shadow:var(--sombra);
   }
   .card h2{
@@ -197,14 +227,28 @@
   footer{text-align:center;margin-top:30px}
   .ig{
     display:inline-flex;align-items:center;gap:9px;text-decoration:none;
-    background:#fff;border:1px solid var(--linea);border-radius:999px;
-    padding:10px 18px;font-weight:700;color:var(--azul);font-size:.9rem;
+    background:var(--card);border:1px solid var(--linea);border-radius:999px;
+    padding:10px 18px;font-weight:700;color:var(--azul-claro);font-size:.9rem;
     box-shadow:var(--sombra);transition:transform .15s,box-shadow .15s;
   }
   .ig:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(29,58,107,.16)}
   .ig svg{width:19px;height:19px}
   .copyright{font-size:.74rem;color:var(--gris-2);margin-top:18px;line-height:1.7}
   .copyright b{color:var(--gris)}
+  /* Acciones del resultado (compartir / copiar) */
+  .acciones{display:flex;gap:10px;flex-wrap:wrap;padding:4px 22px 22px;
+    position:relative;z-index:1}
+  .acciones button{flex:1;min-width:150px;border:none;border-radius:12px;padding:13px 14px;
+    font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    transition:transform .1s ease,filter .15s ease,background .2s ease}
+  .acciones button:active{transform:translateY(1px)}
+  .acciones button svg{width:18px;height:18px;flex:0 0 auto}
+  .b-wa{background:#25d366;color:#fff}
+  .b-wa:hover{filter:brightness(1.05)}
+  .b-copy{background:rgba(255,255,255,.14);color:#fff}
+  .b-copy:hover{background:rgba(255,255,255,.22)}
+  .b-copy.ok{background:var(--verde)}
   /* ===== Mejoras visuales + responsive extra ===== */
   .card{transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
   .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
@@ -247,10 +291,19 @@
   @media(min-width:900px){
         .wrap{max-width:860px}
   }
+  /* Botón de tema (claro/oscuro) */
+  .theme-toggle{position:absolute;top:14px;right:14px;z-index:3;
+    width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);
+    background:rgba(255,255,255,.12);color:#fff;font-size:1.15rem;cursor:pointer;
+    display:grid;place-items:center;line-height:1;
+    transition:background .15s ease,transform .15s ease}
+  .theme-toggle:hover{background:rgba(255,255,255,.24);transform:scale(1.06)}
+  .theme-toggle:active{transform:scale(.96)}
 </style>
 </head>
 <body>
 <header class="hero">
+  <button id="themeBtn" class="theme-toggle" type="button" aria-label="Cambiar entre modo claro y oscuro" onclick="toggleTema()">🌙</button>
   <div class="hero-in">
     <!-- Logo SOEA recreado en SVG -->
           <img class="logo" src="logo.png" alt="SOEA Aceiteros San Lorenzo">
@@ -566,13 +619,77 @@ function render(d,cat,haberes,ded,bruto,totalDed,neto){
   });
   h+=`<div class="ln total"><span class="k">Total deducciones</span><span class="v">− ${fmt(totalDed)}</span></div>
       <div class="ln total grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(neto)}</span></div>
+    </div>
+    <div class="acciones">
+      <button type="button" class="b-wa" onclick="compartirWA()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.71-.84-1.98-.94-.27-.1-.46-.15-.65.15-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.89-2.15-.23-.56-.47-.48-.65-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.15.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.71-.7 1.95-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34zM12.04 21.5h-.01a9.45 9.45 0 01-4.82-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.44 9.44 0 01-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 012.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.36 11.36 0 0012.04.5C5.76.5.65 5.61.65 11.89c0 2.01.53 3.98 1.53 5.71L.5 23.5l6.05-1.59a11.34 11.34 0 005.49 1.4h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.05z"/></svg>
+        Compartir por WhatsApp
+      </button>
+      <button type="button" class="b-copy" id="btnCopy" onclick="copiarRes()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar
+      </button>
     </div>`;
+  ULTIMO={cat,nombre:d.nombre,neto:fmt(neto),bruto:fmt(bruto),totalDed:fmt(totalDed)};
   const resEl=document.getElementById("result"); resEl.innerHTML=h; resEl.classList.remove("pulse"); void resEl.offsetWidth; resEl.classList.add("pulse");
+}
+
+let ULTIMO=null;
+const URL_APP="https://moro616.github.io/calculadora-soea/";
+function textoResultado(){
+  if(!ULTIMO) return "";
+  return `Calculé mi sueldo aceitero con la calculadora del SOEA San Lorenzo.\n`+
+    `• Período: ${ULTIMO.nombre}\n`+
+    `• Categoría: ${ULTIMO.cat}\n`+
+    `• Neto estimado de bolsillo: ${ULTIMO.neto}\n\n`+
+    `Calculá el tuyo acá: ${URL_APP}`;
+}
+function compartirWA(){
+  const msg=textoResultado(); if(!msg) return;
+  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank","noopener");
+}
+function copiarRes(){
+  const msg=textoResultado(); if(!msg) return;
+  const btn=document.getElementById("btnCopy");
+  const ok=()=>{btn.classList.add("ok");btn.lastChild.textContent=" ¡Copiado!";
+    setTimeout(()=>{btn.classList.remove("ok");btn.lastChild.textContent=" Copiar";},1800);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(ok).catch(()=>fallbackCopy(msg,ok));
+  }else fallbackCopy(msg,ok);
+}
+function fallbackCopy(txt,cb){
+  const ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";
+  ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");cb();}catch(e){}
+  document.body.removeChild(ta);
 }
 
 ["mes","cat","ant","empresa","he100","he50","feriados","presentismo","casado","hijos","d_ley","d_soea","d_ret","d_gan"]
   .forEach(id=>{const el=document.getElementById(id);el.addEventListener("input",calc);el.addEventListener("change",calc);});
 calc();
+
+/* ===== Tema claro / oscuro ===== */
+function iconoTema(){
+  const t=document.documentElement.getAttribute("data-theme");
+  const b=document.getElementById("themeBtn");
+  if(b) b.textContent = t==="dark" ? "☀️" : "🌙";
+}
+function toggleTema(){
+  const actual=document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light";
+  const nuevo=actual==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",nuevo);
+  try{localStorage.setItem("tema",nuevo);}catch(e){}
+  iconoTema();
+}
+iconoTema();
+// Si el usuario no eligió tema manualmente, seguir los cambios del sistema en vivo
+if(window.matchMedia){
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{
+    try{if(localStorage.getItem("tema"))return;}catch(_){}
+    document.documentElement.setAttribute("data-theme",e.matches?"dark":"light");
+    iconoTema();
+  });
+}
 </script>
 </body>
 </html>
