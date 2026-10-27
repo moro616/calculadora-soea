@@ -22,15 +22,15 @@
 <style>
 :root{
   --navy:#0f2a57; --navy-2:#0a1d3f; --navy-3:#163a75; --azul:#2f6fe0; --azul-glow:#4d8dff;
-  --verde:#33a63a; --verde-2:#23812b; --verde-claro:#8fd14f; --rojo:#d9483b; --rojo-claro:#ffb4aa;
+  --verde:#2f7bff; --verde-2:#1d5fe0; --verde-claro:#8cc0ff; --rojo:#d9483b; --rojo-claro:#ffb4aa;
   --ambar:#e6a417;
-  --bg:#e9eff8; --bg-2:#dde6f3; --card:#ffffff; --card-2:#f4f7fc;
+  --bg:#e8effc; --bg-2:#d9e5fa; --card:#ffffff; --card-2:#f4f7fc;
   --linea:#d4ddeb; --tinta:#0f1d36; --gris:#56627a; --gris-2:#8590a6;
   --edge:#c3cee0; --sombra-card:0 1px 0 rgba(255,255,255,.9) inset, 0 2px 4px rgba(15,42,87,.06), 0 12px 28px rgba(15,42,87,.10), 0 30px 60px -30px rgba(15,42,87,.25);
   --r:20px;
 }
 :root[data-theme="dark"]{
-  --bg:#070f20; --bg-2:#0d1830; --card:#111f3b; --card-2:#0c1830;
+  --bg:#040d22; --bg-2:#0a1838; --card:#0e1f45; --card-2:#0a1838;
   --linea:#22345a; --tinta:#e8eefa; --gris:#a3b0c9; --gris-2:#7385a6;
   --edge:#060d1c; --navy-3:#2a4f92;
   --sombra-card:0 1px 0 rgba(255,255,255,.06) inset, 0 2px 4px rgba(0,0,0,.3), 0 14px 32px rgba(0,0,0,.35), 0 30px 60px -30px rgba(0,0,0,.6);
@@ -41,7 +41,7 @@ body{
   font-family:"Inter",system-ui,-apple-system,sans-serif;color:var(--tinta);line-height:1.45;min-height:100vh;
   -webkit-font-smoothing:antialiased;
   background:
-    radial-gradient(900px 500px at 105% -10%, rgba(51,166,58,.14), transparent 60%),
+    radial-gradient(900px 500px at 105% -10%, rgba(30,91,255,.14), transparent 60%),
     radial-gradient(900px 600px at -10% 110%, rgba(47,111,224,.16), transparent 60%),
     var(--bg);
   background-attachment:fixed;
@@ -58,14 +58,14 @@ button,input,select{font-family:inherit}
 /* ===== HERO ===== */
 header.hero{
   position:relative;overflow:hidden;color:#fff;
-  background:linear-gradient(160deg,#143a7a 0%,var(--navy) 45%,var(--navy-2) 100%);
+  background:linear-gradient(160deg,#0d3a9e 0%,#0a2766 45%,#051636 100%);
   padding:22px 18px 74px;border-radius:0 0 34px 34px;
   box-shadow:0 1px 0 rgba(255,255,255,.12) inset, 0 24px 50px -10px rgba(10,29,63,.45);
 }
 header.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:
    radial-gradient(420px 260px at 88% 0%, rgba(77,141,255,.35), transparent 70%),
-   radial-gradient(360px 260px at 0% 100%, rgba(51,166,58,.30), transparent 70%);}
+   radial-gradient(360px 260px at 0% 100%, rgba(30,91,255,.30), transparent 70%);}
 header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
   background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
   background-size:36px 36px;mask-image:linear-gradient(180deg,#000,transparent);-webkit-mask-image:linear-gradient(180deg,#000,transparent)}
@@ -114,7 +114,7 @@ header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opac
 .logo-tile img{width:100%;height:100%;object-fit:contain;display:block}
 .badge{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--verde-claro);font-weight:800;margin-bottom:6px}
-.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);box-shadow:0 0 0 4px rgba(143,209,79,.2),0 0 12px var(--verde-claro);animation:blink 2.4s infinite}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);box-shadow:0 0 0 4px rgba(140,192,255,.2),0 0 12px var(--verde-claro);animation:blink 2.4s infinite}
 @keyframes blink{50%{opacity:.45}}
 header h1{font-family:"Sora";font-weight:800;font-size:1.75rem;line-height:1.05;letter-spacing:-.02em;
   text-shadow:0 2px 0 rgba(0,0,0,.25),0 8px 24px rgba(0,0,0,.35)}
@@ -172,7 +172,7 @@ header p.lead{color:#c5d3ec;font-size:.9rem;margin-top:8px;max-width:56ch}
   color:#fff;border-color:transparent;transform:translateY(2px);
   background:linear-gradient(180deg,#3a7cf0,#1e4fae);
   box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 2px 0 #0f2f73,0 6px 14px rgba(47,111,224,.35)}
-.key.on.green{background:linear-gradient(180deg,#45b94b,#24852c);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 2px 0 #145a1a,0 6px 14px rgba(51,166,58,.35)}
+.key.on.green{background:linear-gradient(180deg,#3d8bff,#1a4fd1);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 2px 0 #0d2f80,0 6px 14px rgba(30,91,255,.35)}
 .key:focus-visible{outline:3px solid rgba(77,141,255,.6);outline-offset:2px}
 
 /* ===== Inputs ===== */
@@ -214,7 +214,7 @@ header p.lead{color:#c5d3ec;font-size:.9rem;margin-top:8px;max-width:56ch}
 :root[data-theme="dark"] .sw .tr{background:#2a3b5f}
 .sw .tr::before{content:"";position:absolute;width:26px;height:26px;left:3px;top:3px;border-radius:50%;
   background:linear-gradient(180deg,#fff,#e3e9f3);box-shadow:0 1px 0 #fff inset,0 2px 0 #b5c0d3,0 3px 8px rgba(0,0,0,.25);transition:transform .22s cubic-bezier(.3,1.4,.6,1)}
-.sw input:checked + .tr,:root[data-theme="dark"] .sw input:checked + .tr{background:linear-gradient(180deg,#3fb345,#25882d)}
+.sw input:checked + .tr,:root[data-theme="dark"] .sw input:checked + .tr{background:linear-gradient(180deg,#3d8bff,#1a4fd1)}
 .sw input:checked + .tr::before{transform:translateX(24px)}
 .sw input:focus-visible + .tr{outline:3px solid rgba(77,141,255,.6);outline-offset:2px}
 .sw input:disabled + .tr{cursor:not-allowed}
@@ -233,7 +233,7 @@ details.adv > div{margin-top:12px}
   box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 8px 0 #06122a,0 26px 50px -8px rgba(10,29,63,.55);
 }
 .result::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(420px 220px at 95% -10%, rgba(143,209,79,.25), transparent 65%),radial-gradient(380px 260px at -10% 0%, rgba(77,141,255,.3), transparent 60%)}
+  background:radial-gradient(420px 220px at 95% -10%, rgba(140,192,255,.25), transparent 65%),radial-gradient(380px 260px at -10% 0%, rgba(77,141,255,.3), transparent 60%)}
 .result::after{content:"";position:absolute;left:0;right:0;top:0;height:50%;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,255,255,.07),transparent)}
 .res-top{position:relative;z-index:1;padding:22px 22px 14px}
@@ -251,11 +251,11 @@ details.adv > div{margin-top:12px}
   box-shadow:0 2px 4px rgba(0,0,0,.35) inset}
 .bar i{display:block;height:100%;transition:width .5s cubic-bezier(.3,1,.4,1)}
 .bar .b1{background:linear-gradient(180deg,#6fa4ff,#2f6fe0)}
-.bar .b2{background:linear-gradient(180deg,#a7e070,#33a63a)}
+.bar .b2{background:linear-gradient(180deg,#8be9ff,#22b8e8)}
 .bar .b3{background:linear-gradient(180deg,#ffb0a6,#d9483b)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:9px;font-size:.72rem;color:#c8d5ec}
 .legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.legend .l1::before{background:#4d8dff}.legend .l2::before{background:#5fbf45}.legend .l3::before{background:#ef6e60}
+.legend .l1::before{background:#4d8dff}.legend .l2::before{background:#3cc8f0}.legend .l3::before{background:#ef6e60}
 
 .bd{position:relative;z-index:1;padding:6px 22px 18px}
 .gt{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-claro);font-weight:800;margin:16px 0 4px;display:flex;justify-content:space-between}
@@ -264,11 +264,11 @@ details.adv > div{margin-top:12px}
 .ln:last-child{border-bottom:none}
 .ln .k{color:#d2dcf0;min-width:0;overflow-wrap:anywhere}
 .ln .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ln.add .v{color:#b7e98a}
-.ln.nr .v{color:#9fd8ff}
+.ln.add .v{color:#b9d6ff}
+.ln.nr .v{color:#7fe3ff}
 .ln.sub .v{color:var(--rojo-claro)}
 .ln.zero .v{color:#c9d6ee;font-weight:600}
-.ln.tot{border-top:2px solid rgba(143,209,79,.35);margin-top:6px;padding-top:12px;border-bottom:none}
+.ln.tot{border-top:2px solid rgba(140,192,255,.35);margin-top:6px;padding-top:12px;border-bottom:none}
 .ln.tot .k{color:#fff;font-weight:800}
 .ln.tot .v{font-size:1rem}
 .ln.grand .k{font-family:"Sora";font-size:1rem}
@@ -287,7 +287,7 @@ details.adv > div{margin-top:12px}
 .b-wa:active{box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 1px 0 #127a39}
 .b-copy{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.1));box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 5px 0 rgba(0,0,0,.35),0 10px 20px rgba(0,0,0,.25)}
 .b-copy:active{box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 1px 0 rgba(0,0,0,.35)}
-.b-copy.ok{background:linear-gradient(180deg,#45b94b,#24852c)}
+.b-copy.ok{background:linear-gradient(180deg,#3d8bff,#1a4fd1)}
 .result.pulse .neto{animation:pulse .4s ease}
 @keyframes pulse{40%{transform:scale(1.03)}}
 
@@ -301,8 +301,8 @@ details.adv > div{margin-top:12px}
 .mbar .ml{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-claro);font-weight:800}
 .mbar .mv{font-family:"Sora";font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
 .mbar button{border:none;border-radius:12px;padding:10px 14px;font-weight:800;color:#0a1d3f;cursor:pointer;
-  background:linear-gradient(180deg,#b9ee87,#7cc242);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 4px 0 #3f7d1a}
-.mbar button:active{transform:translateY(3px);box-shadow:0 1px 0 #3f7d1a}
+  background:linear-gradient(180deg,#a9d0ff,#4d8dff);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 4px 0 #1a3f9e}
+.mbar button:active{transform:translateY(3px);box-shadow:0 1px 0 #1a3f9e}
 @media(min-width:980px){.mbar{display:none}}
 
 /* ===== Info ===== */
@@ -320,8 +320,19 @@ details.adv > div{margin-top:12px}
 .info li{margin:4px 0}
 .disc{font-size:.76rem;color:var(--gris);background:var(--bg-2);border:1px solid var(--linea);border-left:4px solid var(--ambar);border-radius:12px;padding:12px 14px;line-height:1.5}
 
-/* ===== Footer Metrics Lab ===== */
+/* ===== Footer ===== */
 footer{margin-top:28px;text-align:center}
+.ft{max-width:520px;margin:0 auto;padding:22px 18px 20px;border-radius:22px;
+  background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--linea);box-shadow:var(--sombra-card)}
+.ft-by{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gris-2)}
+.ft-logo{display:block;width:190px;margin:10px auto 0;border-radius:14px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 4px 0 #040c1d,0 12px 24px -6px rgba(10,29,63,.5);transition:transform .2s}
+.ft-logo:hover{transform:translateY(-2px)}
+.ft-logo img{width:100%;display:block}
+.ft .ig{margin-top:16px}
+.ft-disc{font-size:.76rem;color:var(--gris);line-height:1.55;margin-top:18px;padding-top:16px;border-top:1px dashed var(--linea)}
+.ft-disc b{color:var(--tinta)}
+.ft-copy{font-size:.74rem;color:var(--gris-2);margin-top:10px;font-weight:600}
 .ml-card{display:block;max-width:520px;margin:0 auto;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;
   background:#0a1d3f;box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 7px 0 #040c1d,0 24px 44px -10px rgba(10,29,63,.6);
   transition:transform .25s ease,box-shadow .25s ease;transform:perspective(800px) rotateX(4deg)}
@@ -583,15 +594,18 @@ footer{margin-top:28px;text-align:center}
   </div>
 
   <footer>
-    <a class="ml-card" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
-      <img src="metricslab.jpg" alt="Metrics Lab Agency" loading="lazy">
-      <div class="cta"><span>Desarrollado por Metrics Lab Agency</span><span>Webs, apps y Meta Ads →</span></div>
-    </a>
-    <a class="ig" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      @metricslab.agency
-    </a>
-    <div class="copy">© 2026 Calculadora de Sueldo Aceiteros · Desarrollada por <b>Lucas Morosin · Metrics Lab Agency</b><br>Herramienta independiente, no oficial del SOEA.</div>
+    <div class="ft">
+      <span class="ft-by">Desarrollado por</span>
+      <a class="ft-logo" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener" aria-label="Metrics Lab Agency en Instagram">
+        <img src="metricslab.jpg" alt="Metrics Lab Agency" loading="lazy">
+      </a>
+      <a class="ig" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        @metricslab.agency
+      </a>
+      <p class="ft-disc">Los valores son <b>estimativos</b>: se calculan a partir de la escala salarial anunciada por el SOEA San Lorenzo y se contrastaron con recibos de sueldo tomados como prueba. Herramienta independiente, no oficial del SOEA ni de ninguna empresa.</p>
+      <p class="ft-copy">© 2026 Metrics Lab Agency · Todos los derechos reservados.</p>
+    </div>
   </footer>
 </main>
 
