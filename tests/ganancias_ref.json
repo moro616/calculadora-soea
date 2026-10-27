@@ -1,0 +1,87 @@
+[
+ {
+  "nombre": "F oct 20a 30% casado 2h",
+  "input": {
+   "mes": "oct",
+   "cat": "F",
+   "ant": 20,
+   "turno": 30,
+   "titulo": 0,
+   "presentismo": true,
+   "conyuge": true,
+   "hijos": 2,
+   "pctHijos": 100,
+   "aportesNR": false,
+   "ganModo": "estimada"
+  },
+  "esperado": 646977.57
+ },
+ {
+  "nombre": "D dic título 6% soltero",
+  "input": {
+   "mes": "dic",
+   "cat": "D",
+   "ant": 8,
+   "turno": 0,
+   "titulo": 6,
+   "presentismo": true,
+   "conyuge": false,
+   "hijos": 0,
+   "pctHijos": 100,
+   "aportesNR": false,
+   "ganModo": "estimada"
+  },
+  "esperado": 118027.91
+ },
+ {
+  "nombre": "C sep turno 18% 1 hijo 50%",
+  "input": {
+   "mes": "sep",
+   "cat": "C",
+   "ant": 12,
+   "turno": 18,
+   "titulo": 3,
+   "presentismo": true,
+   "conyuge": false,
+   "hijos": 1,
+   "pctHijos": 50,
+   "aportesNR": false,
+   "ganModo": "estimada"
+  },
+  "esperado": 175065.77
+ },
+ {
+  "nombre": "E ago aportes NR",
+  "input": {
+   "mes": "ago",
+   "cat": "E",
+   "ant": 25,
+   "turno": 30,
+   "titulo": 6,
+   "presentismo": false,
+   "conyuge": true,
+   "hijos": 3,
+   "pctHijos": 100,
+   "aportesNR": true,
+   "ganModo": "estimada"
+  },
+  "esperado": 389222.77
+ },
+ {
+  "nombre": "B oct sin adicionales",
+  "input": {
+   "mes": "oct",
+   "cat": "B",
+   "ant": 0,
+   "turno": 0,
+   "titulo": 0,
+   "presentismo": true,
+   "conyuge": false,
+   "hijos": 0,
+   "pctHijos": 100,
+   "aportesNR": false,
+   "ganModo": "estimada"
+  },
+  "esperado": 11380.38
+ }
+]
