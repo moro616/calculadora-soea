@@ -1,8 +1,8 @@
 /* Service worker: permite instalar la app y usarla sin conexión.
    Estrategia: primero red (para recibir siempre la escala actualizada), si falla usa la copia guardada. */
-const CACHE = "sueldo-aceitero-v1";
+const CACHE = "sueldo-aceitero-v2";
 const APP = ["./", "index.html", "motor.js", "metricslab.jpg", "manifest.webmanifest",
-  "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon-32.png", "icons/ml-icon.jpg"];
+  "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon-32.png", "icons/logo-gota.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(APP)).then(() => self.skipWaiting()));

@@ -126,16 +126,12 @@ header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opac
   transform:perspective(500px) rotateX(6deg) rotateY(-8deg);transition:transform .4s ease}
 .logo-tile:hover{transform:perspective(500px) rotateX(0) rotateY(0) translateY(-2px)}
 .logo-tile img{width:100%;height:100%;object-fit:contain;display:block}
-.logo-tile.ml{padding:0;overflow:hidden;position:relative;animation:flotar 5s ease-in-out infinite}
-.logo-tile.ml img{object-fit:cover;border-radius:inherit}
-.logo-tile.ml::after{content:"";position:absolute;inset:-40%;pointer-events:none;
-  background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);
-  transform:translateX(-100%);animation:brillo 3.6s ease-in-out infinite}
-.logo-tile.ml::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
-  box-shadow:0 0 0 1px rgba(140,192,255,.45) inset,0 0 22px rgba(77,141,255,.55) inset;animation:glow 3.6s ease-in-out infinite}
-@keyframes brillo{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
-@keyframes glow{50%{box-shadow:0 0 0 1px rgba(140,192,255,.8) inset,0 0 30px rgba(77,141,255,.9) inset}}
-@keyframes flotar{0%,100%{transform:perspective(500px) rotateX(6deg) rotateY(-8deg) translateY(0)}50%{transform:perspective(500px) rotateX(2deg) rotateY(6deg) translateY(-4px)}}
+.logo-gota{flex:0 0 auto;width:96px;height:96px;position:relative;animation:flotar 5s ease-in-out infinite}
+.logo-gota img{width:100%;height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 6px 0 rgba(3,11,31,.55)) drop-shadow(0 0 14px rgba(77,141,255,.6));animation:glow 3.6s ease-in-out infinite}
+@keyframes glow{50%{filter:drop-shadow(0 6px 0 rgba(3,11,31,.55)) drop-shadow(0 0 26px rgba(120,170,255,.95))}}
+@keyframes flotar{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+@media(min-width:640px){.logo-gota{width:116px;height:116px}}
 .badge{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--verde-claro);font-weight:800;margin-bottom:6px}
 .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);box-shadow:0 0 0 4px rgba(140,192,255,.2),0 0 12px var(--verde-claro);animation:blink 2.4s infinite}
@@ -411,7 +407,7 @@ footer{margin-top:28px;text-align:center}
       <button id="themeBtn" class="theme-toggle" type="button" aria-label="Cambiar modo claro/oscuro">🌙</button>
     </div>
     <div class="brand">
-      <div class="logo-tile ml"><img src="icons/ml-icon.jpg" alt="Metrics Lab Agency"></div>
+      <div class="logo-gota"><img src="icons/logo-gota.png" alt="Logo de la calculadora: gota con trabajador aceitero"></div>
       <div>
         <div class="badge"><span class="dot"></span>Escala 2026 · CCT 391/04</div>
         <h1>Calculadora de sueldo aceitero</h1>
