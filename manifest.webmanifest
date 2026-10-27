@@ -1,0 +1,17 @@
+{
+  "name": "Calculadora de Sueldo Aceitero",
+  "short_name": "Sueldo Aceitero",
+  "description": "Calculadora independiente y orientativa de sueldo aceitero (CCT 391/04). Por Metrics Lab Agency.",
+  "lang": "es-AR",
+  "start_url": "./?source=app",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#040d22",
+  "theme_color": "#0a2766",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

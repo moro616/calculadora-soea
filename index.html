@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Calculadora de Sueldo · Aceiteros San Lorenzo</title>
 <meta name="description" content="Calculadora independiente y orientativa de sueldo aceitero (CCT 391/04, SOEA San Lorenzo). Escala 2026, todas las categorías, adicionales, horas extra, aportes y Ganancias.">
-<meta name="theme-color" content="#0b1d3d">
+<meta name="theme-color" content="#0a2766">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sueldo Aceitero">
 <!-- Tema claro/oscuro antes de pintar -->
 <script>(function(){try{var t=localStorage.getItem('tema');if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Google tag (gtag.js) -->
@@ -70,23 +77,30 @@ header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opac
   background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
   background-size:36px 36px;mask-image:linear-gradient(180deg,#000,transparent);-webkit-mask-image:linear-gradient(180deg,#000,transparent)}
 .hero-in{position:relative;z-index:1;max-width:1120px;margin:0 auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.topbar{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:10px;margin-bottom:20px}
+.topbar .wx-wrap{justify-self:center;display:flex;justify-content:center}
+.ins-mini{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);cursor:pointer;color:#fff;font-size:1.05rem;
+  display:grid;place-items:center;visibility:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06));
+  box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 4px 0 rgba(0,0,0,.25),0 8px 18px rgba(0,0,0,.25);transition:transform .1s,box-shadow .1s}
+.ins-mini.on{visibility:visible}
+.ins-mini:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 1px 0 rgba(0,0,0,.25)}
 .weather{
   display:inline-flex;align-items:center;gap:9px;padding:7px 13px 7px 9px;border-radius:999px;
   background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.07));
   border:1px solid rgba(255,255,255,.22);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 6px 16px rgba(0,0,0,.25);
-  font-size:.82rem;font-weight:600;color:#fff;cursor:pointer;min-height:38px;max-width:calc(100% - 56px);
+  font-size:.84rem;font-weight:600;color:#fff;cursor:pointer;min-height:42px;max-width:100%;padding:7px 16px 7px 11px;
   -webkit-tap-highlight-color:transparent;transition:transform .15s}
 .weather:hover{transform:translateY(-1px)}
 .weather .ico{font-size:1.35rem;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
 .weather .temp{font-family:"Sora";font-weight:800;font-size:1rem}
 .weather .loc{opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .weather.err{opacity:.6}
-.wx-pop{position:absolute;top:52px;left:0;z-index:5;display:none;min-width:260px;
+.wx-pop{position:absolute;top:54px;left:50%;transform:translateX(-50%);z-index:5;display:none;width:min(300px,calc(100vw - 32px));
   background:linear-gradient(180deg,#183f80,#0d2550);border:1px solid rgba(255,255,255,.18);border-radius:16px;
   padding:14px;box-shadow:0 20px 40px rgba(0,0,0,.4);font-size:.82rem}
 .wx-pop.on{display:block;animation:pop .2s ease}
-@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
 .wx-pop .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.09)}
 .wx-pop .row:last-child{border:none}
 .wx-pop .muted{opacity:.7}
@@ -112,6 +126,16 @@ header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opac
   transform:perspective(500px) rotateX(6deg) rotateY(-8deg);transition:transform .4s ease}
 .logo-tile:hover{transform:perspective(500px) rotateX(0) rotateY(0) translateY(-2px)}
 .logo-tile img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-tile.ml{padding:0;overflow:hidden;position:relative;animation:flotar 5s ease-in-out infinite}
+.logo-tile.ml img{object-fit:cover;border-radius:inherit}
+.logo-tile.ml::after{content:"";position:absolute;inset:-40%;pointer-events:none;
+  background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);
+  transform:translateX(-100%);animation:brillo 3.6s ease-in-out infinite}
+.logo-tile.ml::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
+  box-shadow:0 0 0 1px rgba(140,192,255,.45) inset,0 0 22px rgba(77,141,255,.55) inset;animation:glow 3.6s ease-in-out infinite}
+@keyframes brillo{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
+@keyframes glow{50%{box-shadow:0 0 0 1px rgba(140,192,255,.8) inset,0 0 30px rgba(77,141,255,.9) inset}}
+@keyframes flotar{0%,100%{transform:perspective(500px) rotateX(6deg) rotateY(-8deg) translateY(0)}50%{transform:perspective(500px) rotateX(2deg) rotateY(6deg) translateY(-4px)}}
 .badge{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--verde-claro);font-weight:800;margin-bottom:6px}
 .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);box-shadow:0 0 0 4px rgba(140,192,255,.2),0 0 12px var(--verde-claro);animation:blink 2.4s infinite}
@@ -320,6 +344,26 @@ details.adv > div{margin-top:12px}
 .info li{margin:4px 0}
 .disc{font-size:.76rem;color:var(--gris);background:var(--bg-2);border:1px solid var(--linea);border-left:4px solid var(--ambar);border-radius:12px;padding:12px 14px;line-height:1.5}
 
+/* ===== Instalar app ===== */
+.app-card{max-width:520px;margin:28px auto 0;display:flex;align-items:center;gap:16px;padding:18px;border-radius:22px;color:#fff;
+  background:linear-gradient(160deg,#1a4fd1 0%,#0a2766 60%,#061a45 100%);border:1px solid rgba(140,192,255,.3);
+  box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 6px 0 #030b1f,0 22px 40px -10px rgba(10,39,102,.6)}
+.app-card img{width:64px;height:64px;border-radius:16px;flex:0 0 auto;box-shadow:0 4px 0 #030b1f,0 8px 16px rgba(0,0,0,.35)}
+.app-card .t{font-family:"Sora";font-weight:800;font-size:1.05rem;line-height:1.15}
+.app-card .s{font-size:.78rem;color:#c5d6f5;margin-top:4px;line-height:1.4}
+.app-card .btn3d{margin-top:12px;min-width:0;width:100%;color:#0a1d3f;
+  background:linear-gradient(180deg,#ffffff,#cfe0ff);box-shadow:0 1px 0 #fff inset,0 5px 0 #6f8fc9,0 10px 20px rgba(0,0,0,.3)}
+.app-card .btn3d:active{box-shadow:0 1px 0 #fff inset,0 1px 0 #6f8fc9}
+.app-card.done .btn3d{display:none}
+.modal{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(2,8,22,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:16px}
+.modal.on{display:flex}
+.modal .box{width:100%;max-width:420px;border-radius:24px;padding:22px;color:var(--tinta);
+  background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--linea);box-shadow:0 30px 60px rgba(0,0,0,.45);animation:up .25s ease}
+.modal h3{font-family:"Sora";font-size:1.1rem;margin-bottom:12px}
+.modal ol{margin-left:20px;font-size:.9rem;line-height:1.6;color:var(--gris)}
+.modal ol b{color:var(--tinta)}
+.modal .btn3d{margin-top:16px;width:100%;background:linear-gradient(180deg,#3d8bff,#1a4fd1);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 5px 0 #0d2f80}
+
 /* ===== Footer ===== */
 footer{margin-top:28px;text-align:center}
 .ft{max-width:520px;margin:0 auto;padding:22px 18px 20px;border-radius:22px;
@@ -357,6 +401,7 @@ footer{margin-top:28px;text-align:center}
 <header class="hero">
   <div class="hero-in">
     <div class="topbar">
+      <button type="button" class="ins-mini" id="insMini" aria-label="Instalar la app en el celular" title="Instalar app">📲</button>
       <div class="wx-wrap">
         <button type="button" class="weather" id="wx" aria-expanded="false" aria-controls="wxPop">
           <span class="ico">⏳</span><span class="temp">--°</span><span class="loc">San Lorenzo</span>
@@ -366,20 +411,7 @@ footer{margin-top:28px;text-align:center}
       <button id="themeBtn" class="theme-toggle" type="button" aria-label="Cambiar modo claro/oscuro">🌙</button>
     </div>
     <div class="brand">
-      <div class="logo-tile" aria-hidden="true">
-        <svg viewBox="0 0 64 64" width="100%" height="100%">
-          <defs>
-            <linearGradient id="gDrop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cc0ff"/><stop offset="1" stop-color="#1d5fe0"/></linearGradient>
-            <linearGradient id="gBar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfe0ff"/></linearGradient>
-          </defs>
-          <path d="M32 6 C32 6 14 27 14 39 a18 18 0 0 0 36 0 C50 27 32 6 32 6 Z" fill="url(#gDrop)"/>
-          <path d="M24 16 C21 21 18 27 17.5 32" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <rect x="22" y="40" width="5" height="9" rx="1.5" fill="url(#gBar)"/>
-          <rect x="29.5" y="35" width="5" height="14" rx="1.5" fill="url(#gBar)"/>
-          <rect x="37" y="29" width="5" height="20" rx="1.5" fill="url(#gBar)"/>
-          <text x="32" y="26" text-anchor="middle" font-family="Sora,Inter,sans-serif" font-weight="800" font-size="11" fill="#fff">$</text>
-        </svg>
-      </div>
+      <div class="logo-tile ml"><img src="icons/ml-icon.jpg" alt="Metrics Lab Agency"></div>
       <div>
         <div class="badge"><span class="dot"></span>Escala 2026 · CCT 391/04</div>
         <h1>Calculadora de sueldo aceitero</h1>
@@ -606,6 +638,15 @@ footer{margin-top:28px;text-align:center}
     </details>
   </div>
 
+  <section class="app-card" id="appCard">
+    <img src="icons/icon-192.png" alt="">
+    <div style="flex:1;min-width:0">
+      <div class="t">Tené la app en tu celu</div>
+      <div class="s" id="appTxt">Instalala gratis: se abre desde un ícono, a pantalla completa, y funciona aunque no tengas señal en planta.</div>
+      <button type="button" class="btn3d" id="insBtn">📲 Instalar en el celu</button>
+    </div>
+  </section>
+
   <footer>
     <div class="ft">
       <span class="ft-by">Desarrollado por</span>
@@ -621,6 +662,14 @@ footer{margin-top:28px;text-align:center}
     </div>
   </footer>
 </main>
+
+<div class="modal" id="insModal" role="dialog" aria-modal="true" aria-labelledby="insTit">
+  <div class="box">
+    <h3 id="insTit">Instalar en tu celu</h3>
+    <div id="insPasos"></div>
+    <button type="button" class="btn3d" id="insCerrar">Entendido</button>
+  </div>
+</div>
 
 <div class="mbar" id="mbar">
   <div><div class="ml" id="mbar-l">Neto estimado</div><div class="mv" id="mbar-v">$ 0</div></div>
@@ -857,6 +906,41 @@ function cargarClima(){
   });
 }
 cargarClima(); setInterval(cargarClima, 30*60*1000);
+
+/* ---------- Instalar como app (PWA) ---------- */
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+let promptInstalar = null;
+const standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+const ua = navigator.userAgent || "";
+const esIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const appCard = $("appCard"), insMini = $("insMini"), modal = $("insModal");
+function marcarInstalada(){
+  appCard.classList.add("done"); insMini.classList.remove("on");
+  $("appTxt").textContent = "¡Ya la tenés instalada! Abrila desde el ícono de tu celu.";
+}
+if (standalone) marcarInstalada(); else insMini.classList.add("on");
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); promptInstalar = e; insMini.classList.add("on"); });
+window.addEventListener("appinstalled", () => { marcarInstalada(); promptInstalar = null; try{ gtag("event","app_instalada"); }catch(_){} });
+function abrirPasos(){
+  $("insPasos").innerHTML = esIOS
+    ? `<ol><li>Abrí esta página en <b>Safari</b>.</li><li>Tocá el botón <b>Compartir</b> (el cuadrado con la flecha ↑).</li><li>Elegí <b>“Agregar a inicio”</b> y confirmá.</li></ol>`
+    : `<ol><li>Tocá el menú <b>⋮</b> del navegador (arriba a la derecha).</li><li>Elegí <b>“Instalar app”</b> o <b>“Agregar a pantalla principal”</b>.</li><li>Confirmá y listo: queda el ícono en tu celu.</li></ol>`;
+  modal.classList.add("on");
+}
+async function instalar(){
+  if (promptInstalar) {
+    promptInstalar.prompt();
+    const r = await promptInstalar.userChoice.catch(() => null);
+    if (r && r.outcome === "accepted") marcarInstalada();
+    promptInstalar = null;
+  } else abrirPasos();
+}
+$("insBtn").addEventListener("click", instalar);
+insMini.addEventListener("click", instalar);
+$("insCerrar").addEventListener("click", () => modal.classList.remove("on"));
+modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("on"); });
 
 sync();
 })();
