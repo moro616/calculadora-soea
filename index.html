@@ -2,10 +2,12 @@
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Sueldo · SOEA Aceiteros San Lorenzo</title>
-<!-- Tema claro/oscuro: se aplica antes de pintar para evitar parpadeo -->
-<script>(function(){try{var t=localStorage.getItem('tema');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Calculadora de Sueldo · Aceiteros San Lorenzo</title>
+<meta name="description" content="Calculadora independiente y orientativa de sueldo aceitero (CCT 391/04, SOEA San Lorenzo). Escala 2026, todas las categorías, adicionales, horas extra, aportes y Ganancias.">
+<meta name="theme-color" content="#0b1d3d">
+<!-- Tema claro/oscuro antes de pintar -->
+<script>(function(){try{var t=localStorage.getItem('tema');if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LE1KJJF4CW"></script>
 <script>
@@ -16,685 +18,821 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    /* Paleta tomada del logo SOEA */
-    --azul:#1d3a6b;        /* azul marino del recuadro */
-    --azul-2:#16305c;
-    --azul-claro:#2e539a;
-    --verde:#3aa935;       /* verde silos */
-    --verde-2:#2f8a2c;
-    --verde-claro:#7cc242; /* gota de aceite */
-    --crema:#eaf1fb;       /* fondo celeste muy suave */
-    --crema-2:#dfe9f7;
-    --linea:#d6deea;
-    --rojo:#c0392b;
-    --rojo-claro:#f3b4ac;
+:root{
+  --navy:#0f2a57; --navy-2:#0a1d3f; --navy-3:#163a75; --azul:#2f6fe0; --azul-glow:#4d8dff;
+  --verde:#33a63a; --verde-2:#23812b; --verde-claro:#8fd14f; --rojo:#d9483b; --rojo-claro:#ffb4aa;
+  --ambar:#e6a417;
+  --bg:#e9eff8; --bg-2:#dde6f3; --card:#ffffff; --card-2:#f4f7fc;
+  --linea:#d4ddeb; --tinta:#0f1d36; --gris:#56627a; --gris-2:#8590a6;
+  --edge:#c3cee0; --sombra-card:0 1px 0 rgba(255,255,255,.9) inset, 0 2px 4px rgba(15,42,87,.06), 0 12px 28px rgba(15,42,87,.10), 0 30px 60px -30px rgba(15,42,87,.25);
+  --r:20px;
+}
+:root[data-theme="dark"]{
+  --bg:#070f20; --bg-2:#0d1830; --card:#111f3b; --card-2:#0c1830;
+  --linea:#22345a; --tinta:#e8eefa; --gris:#a3b0c9; --gris-2:#7385a6;
+  --edge:#060d1c; --navy-3:#2a4f92;
+  --sombra-card:0 1px 0 rgba(255,255,255,.06) inset, 0 2px 4px rgba(0,0,0,.3), 0 14px 32px rgba(0,0,0,.35), 0 30px 60px -30px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:"Inter",system-ui,-apple-system,sans-serif;color:var(--tinta);line-height:1.45;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 500px at 105% -10%, rgba(51,166,58,.14), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(47,111,224,.16), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+body::before{ /* grilla sutil estilo Metrics Lab */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:linear-gradient(rgba(47,111,224,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,224,.06) 1px,transparent 1px);
+  background-size:42px 42px;mask-image:radial-gradient(ellipse at top,#000 20%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at top,#000 20%,transparent 75%);
+}
+button,input,select{font-family:inherit}
+.shell{position:relative;z-index:1}
 
-    --gris:#5d6675;
-    --gris-2:#8a93a3;
-    --tinta:#16223a;
-    --radius:16px;
-    --sombra:0 8px 26px rgba(29,58,107,.10);
-    --card:#ffffff;
-  }
-  /* ===== Modo oscuro ===== */
-  :root[data-theme="dark"]{
-    --azul:#213f74;
-    --azul-2:#152a4d;
-    --azul-claro:#7aa9ee;
-    --verde:#3aa935;
-    --verde-2:#2f8a2c;
-    --verde-claro:#8ed05a;
-    --crema:#0e1626;        /* fondo oscuro */
-    --crema-2:#182338;
-    --linea:#2a3a58;
-    --gris:#a6b2c7;
-    --gris-2:#7b8aa2;
-    --tinta:#e7edf7;        /* texto claro */
-    --card:#16223c;
-    --sombra:0 8px 26px rgba(0,0,0,.35);
-  }
-  :root[data-theme="dark"] body{
-    background:
-      radial-gradient(1100px 600px at 100% -15%, rgba(58,169,53,.14), transparent 55%),
-      radial-gradient(800px 600px at -15% 115%, rgba(46,83,154,.22), transparent 55%),
-      var(--crema);
-  }
-  :root[data-theme="dark"] select{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237aa9ee' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  }
-  :root[data-theme="dark"] .track{background:#3a4a66}
-  /* Al hacer foco NO volver a blanco (dejaba texto claro sobre fondo blanco = invisible) */
-  :root[data-theme="dark"] select:focus,
-  :root[data-theme="dark"] input:focus{background:var(--crema-2)}
-  /* Lista desplegable de los <option> legible en oscuro */
-  :root[data-theme="dark"] select option{background:#16223c;color:#e7edf7}
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{
-    font-family:"Inter",system-ui,-apple-system,sans-serif;
-    background:
-      radial-gradient(1100px 600px at 100% -15%, rgba(58,169,53,.10), transparent 55%),
-      radial-gradient(800px 600px at -15% 115%, rgba(29,58,107,.10), transparent 55%),
-      var(--crema);
-    color:var(--tinta);line-height:1.45;min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:780px;margin:0 auto;padding:0 16px 70px}
-  @media(min-width:640px){.wrap{padding:0 24px 80px}}
+/* ===== HERO ===== */
+header.hero{
+  position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(160deg,#143a7a 0%,var(--navy) 45%,var(--navy-2) 100%);
+  padding:22px 18px 74px;border-radius:0 0 34px 34px;
+  box-shadow:0 1px 0 rgba(255,255,255,.12) inset, 0 24px 50px -10px rgba(10,29,63,.45);
+}
+header.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+   radial-gradient(420px 260px at 88% 0%, rgba(77,141,255,.35), transparent 70%),
+   radial-gradient(360px 260px at 0% 100%, rgba(51,166,58,.30), transparent 70%);}
+header.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:36px 36px;mask-image:linear-gradient(180deg,#000,transparent);-webkit-mask-image:linear-gradient(180deg,#000,transparent)}
+.hero-in{position:relative;z-index:1;max-width:1120px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.weather{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 13px 7px 9px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.07));
+  border:1px solid rgba(255,255,255,.22);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 6px 16px rgba(0,0,0,.25);
+  font-size:.82rem;font-weight:600;color:#fff;cursor:pointer;min-height:38px;max-width:calc(100% - 56px);
+  -webkit-tap-highlight-color:transparent;transition:transform .15s}
+.weather:hover{transform:translateY(-1px)}
+.weather .ico{font-size:1.35rem;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.weather .temp{font-family:"Sora";font-weight:800;font-size:1rem}
+.weather .loc{opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.weather.err{opacity:.6}
+.wx-pop{position:absolute;top:52px;left:0;z-index:5;display:none;min-width:260px;
+  background:linear-gradient(180deg,#183f80,#0d2550);border:1px solid rgba(255,255,255,.18);border-radius:16px;
+  padding:14px;box-shadow:0 20px 40px rgba(0,0,0,.4);font-size:.82rem}
+.wx-pop.on{display:block;animation:pop .2s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.wx-pop .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.wx-pop .row:last-child{border:none}
+.wx-pop .muted{opacity:.7}
+.wx-days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.wx-day{text-align:center;padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.07)}
+.wx-day b{display:block;font-size:.72rem;opacity:.8;font-weight:700;text-transform:capitalize}
+.wx-day span{font-size:1.3rem;display:block;margin:2px 0}
+.wx-src{margin-top:10px;font-size:.68rem;opacity:.6}
+.wx-wrap{position:relative;min-width:0}
 
-  /* HERO */
-  header.hero{
-    position:relative;overflow:hidden;color:#fff;
-    background:linear-gradient(150deg,var(--azul) 0%,var(--azul-2) 100%);
-    border-radius:0 0 30px 30px;padding:28px 22px 32px;
-    box-shadow:0 16px 38px rgba(22,48,92,.26);
-  }
-  header.hero::before{
-    content:"";position:absolute;right:-80px;top:-90px;width:300px;height:300px;
-    background:radial-gradient(circle,rgba(58,169,53,.28),transparent 66%);
-  }
-  header.hero::after{
-    content:"";position:absolute;left:-50px;bottom:-100px;width:220px;height:220px;
-    background:radial-gradient(circle,rgba(124,194,66,.26),transparent 70%);
-  }
-  .hero-in{position:relative;z-index:1;max-width:780px;margin:0 auto;
-    display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-  .logo{flex:0 0 auto;width:76px;height:76px;border-radius:14px;background:#fff;
-    padding:6px;object-fit:contain;box-shadow:0 6px 16px rgba(0,0,0,.22)}
-  @media(max-width:420px){
-    .hero-in{gap:14px}
-    .logo{width:62px;height:62px}
-  }
-  .hero-txt{flex:1;min-width:200px}
-  .badge{
-    display:inline-flex;align-items:center;gap:9px;font-size:.68rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--verde-claro);font-weight:700;margin-bottom:8px;
-  }
-  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);
-    box-shadow:0 0 0 4px rgba(124,194,66,.22)}
-  header.hero h1{
-    font-family:"Fraunces",serif;font-weight:800;font-size:1.9rem;line-height:1.05;
-    letter-spacing:-.015em;
-  }
-  @media(min-width:640px){header.hero h1{font-size:2.3rem}}
-  header.hero p{color:#c3d0e6;font-size:.92rem;margin-top:9px;max-width:50ch}
+.theme-toggle{
+  width:42px;height:42px;border-radius:50%;flex:0 0 auto;border:1px solid rgba(255,255,255,.25);
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06));color:#fff;font-size:1.1rem;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 4px 0 rgba(0,0,0,.25),0 8px 18px rgba(0,0,0,.25);
+  transition:transform .1s,box-shadow .1s}
+.theme-toggle:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 1px 0 rgba(0,0,0,.25)}
 
-  .card{
-    background:var(--card);border:1px solid var(--linea);border-radius:var(--radius);
-    padding:20px;margin-top:18px;box-shadow:var(--sombra);
-  }
-  .card h2{
-    font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;color:var(--azul-claro);
-    font-weight:800;display:flex;align-items:center;gap:11px;margin-bottom:18px;
-  }
-  .card h2 .num{
-    width:26px;height:26px;border-radius:8px;background:var(--azul);color:#fff;
-    display:grid;place-items:center;font-size:.76rem;font-weight:800;flex:0 0 auto;
-    font-family:"Fraunces",serif;
-  }
+.brand{display:flex;align-items:center;gap:18px}
+.logo-tile{
+  flex:0 0 auto;width:84px;height:84px;border-radius:22px;padding:8px;
+  background:linear-gradient(180deg,#ffffff,#e8eef8);
+  box-shadow:0 1px 0 #fff inset,0 -3px 0 #c9d4e6 inset,0 6px 0 #0a1a38,0 14px 26px rgba(0,0,0,.45);
+  transform:perspective(500px) rotateX(6deg) rotateY(-8deg);transition:transform .4s ease}
+.logo-tile:hover{transform:perspective(500px) rotateX(0) rotateY(0) translateY(-2px)}
+.logo-tile img{width:100%;height:100%;object-fit:contain;display:block}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--verde-claro);font-weight:800;margin-bottom:6px}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);box-shadow:0 0 0 4px rgba(143,209,79,.2),0 0 12px var(--verde-claro);animation:blink 2.4s infinite}
+@keyframes blink{50%{opacity:.45}}
+header h1{font-family:"Sora";font-weight:800;font-size:1.75rem;line-height:1.05;letter-spacing:-.02em;
+  text-shadow:0 2px 0 rgba(0,0,0,.25),0 8px 24px rgba(0,0,0,.35)}
+header p.lead{color:#c5d3ec;font-size:.9rem;margin-top:8px;max-width:56ch}
+@media(min-width:640px){header.hero{padding:26px 28px 84px}header h1{font-size:2.35rem}.logo-tile{width:100px;height:100px}}
 
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:520px){.grid{grid-template-columns:1fr}}
-  label{display:block;font-size:.76rem;font-weight:700;color:var(--gris);margin-bottom:7px}
-  select,input[type=number]{
-    width:100%;padding:12px 13px;border:1.5px solid var(--linea);border-radius:11px;
-    font-size:1rem;background:var(--crema);color:var(--tinta);font-weight:600;
-    font-family:inherit;transition:border-color .15s,box-shadow .15s,background .15s;
-    appearance:none;-webkit-appearance:none;
-  }
-  select{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231d3a6b' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 13px center;padding-right:38px;
-  }
-  select:focus,input:focus{outline:none;border-color:var(--verde);
-    background:#fff;box-shadow:0 0 0 3.5px rgba(58,169,53,.16)}
+/* ===== LAYOUT ===== */
+.wrap{max-width:1120px;margin:-50px auto 0;padding:0 14px 120px;position:relative;z-index:2}
+.grid-main{display:grid;gap:18px}
+@media(min-width:980px){
+  .wrap{padding:0 24px 60px}
+  .grid-main{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:start}
+  .col-res{position:sticky;top:18px}
+}
+.col-form{display:grid;gap:16px;min-width:0}
 
-  .chips{display:flex;flex-wrap:wrap;gap:9px}
-  .chip{
-    border:1.5px solid var(--linea);background:var(--crema);border-radius:999px;
-    padding:9px 16px;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--gris);
-    transition:all .15s;user-select:none;-webkit-tap-highlight-color:transparent;
-    font-family:inherit;-webkit-appearance:none;appearance:none;outline:none;
-    touch-action:manipulation;line-height:normal;
-  }
-  .chip:hover{border-color:var(--gris-2)}
-  .chip.on{background:var(--azul);border-color:var(--azul);color:#fff;
-    box-shadow:0 4px 12px rgba(29,58,107,.20)}
+/* ===== CARDS ===== */
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--linea);border-radius:var(--r);
+  padding:18px;box-shadow:var(--sombra-card);position:relative;
+  animation:up .5s ease both}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card h2{display:flex;align-items:center;gap:11px;font-family:"Sora";font-size:.98rem;font-weight:700;margin-bottom:16px;letter-spacing:-.01em}
+.card h2 .num{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:.8rem;font-weight:800;flex:0 0 auto;
+  background:linear-gradient(160deg,var(--azul),var(--navy));
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 3px 0 #0a1d3f,0 6px 12px rgba(15,42,87,.3)}
+.card h2 small{margin-left:auto;font-family:"Inter";font-size:.7rem;color:var(--gris-2);font-weight:600}
+.lbl{display:block;font-size:.75rem;font-weight:700;color:var(--gris);margin:0 0 8px;letter-spacing:.01em}
+.field + .field{margin-top:16px}
+.hint{font-size:.72rem;color:var(--gris-2);margin-top:7px;line-height:1.4}
+.hint b{color:var(--gris)}
+.err-msg{font-size:.72rem;color:var(--rojo);font-weight:700;margin-top:6px;display:none}
+.has-err .err-msg{display:block}
+.has-err input{border-color:var(--rojo)!important;box-shadow:0 0 0 3px rgba(217,72,59,.15)!important}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.two{grid-template-columns:1fr}}
 
-  .switch-row{display:flex;align-items:center;justify-content:space-between;gap:14px;
-    padding:13px 0;border-top:1px dashed var(--linea);flex-wrap:wrap}
-  .switch-row > div:first-child{flex:1;min-width:0}
-  .switch-row:first-of-type{border-top:none;padding-top:4px}
-  .switch-row .t{font-weight:700;font-size:.94rem;color:var(--tinta)}
-  .switch-row .s{font-size:.76rem;color:var(--gris);margin-top:2px}
-  .toggle{position:relative;width:50px;height:28px;flex:0 0 auto}
-  .toggle input{opacity:0;width:0;height:0}
-  .track{position:absolute;inset:0;background:#c4cdda;border-radius:999px;
-    transition:.2s;cursor:pointer}
-  .track::before{content:"";position:absolute;height:22px;width:22px;left:3px;top:3px;
-    background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
-  .toggle input:checked + .track{background:var(--verde)}
-  .toggle input:checked + .track::before{transform:translateX(22px)}
-  .num-mini{width:84px;max-width:84px;text-align:center;flex:0 0 auto}
-  .hint{font-size:.73rem;color:var(--gris-2);margin-top:7px;line-height:1.4}
+/* ===== Chips 3D (teclas) ===== */
+.keys{display:flex;flex-wrap:wrap;gap:8px}
+.keys.cols-6{display:grid;grid-template-columns:repeat(6,1fr)}
+.keys.cols-3{display:grid;grid-template-columns:repeat(3,1fr)}
+@media(max-width:420px){.keys.mes{grid-template-columns:repeat(3,1fr)}}
+.key{
+  -webkit-appearance:none;appearance:none;border:1px solid var(--linea);cursor:pointer;
+  background:linear-gradient(180deg,var(--card),var(--card-2));color:var(--gris);
+  border-radius:13px;padding:10px 12px;font-size:.88rem;font-weight:700;line-height:1.1;text-align:center;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 4px 0 var(--edge),0 6px 10px rgba(15,42,87,.10);
+  transition:transform .08s ease,box-shadow .08s ease,background .15s,color .15s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;min-height:44px}
+:root[data-theme="dark"] .key{box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 4px 0 var(--edge),0 6px 10px rgba(0,0,0,.3)}
+.key small{display:block;font-size:.62rem;font-weight:600;opacity:.75;margin-top:3px}
+.key:hover{color:var(--tinta)}
+.key:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 1px 0 var(--edge)}
+.key.on{
+  color:#fff;border-color:transparent;transform:translateY(2px);
+  background:linear-gradient(180deg,#3a7cf0,#1e4fae);
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 2px 0 #0f2f73,0 6px 14px rgba(47,111,224,.35)}
+.key.on.green{background:linear-gradient(180deg,#45b94b,#24852c);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 2px 0 #145a1a,0 6px 14px rgba(51,166,58,.35)}
+.key:focus-visible{outline:3px solid rgba(77,141,255,.6);outline-offset:2px}
 
-  /* RESULTADO */
-  .result{
-    background:linear-gradient(155deg,var(--azul),var(--azul-2));color:#fff;
-    border-radius:20px;margin-top:24px;overflow:hidden;
-    box-shadow:0 18px 42px rgba(22,48,92,.28);
-  }
-  .result .top{padding:24px 22px 8px}
-  .result .top .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--verde-claro);font-weight:700}
-  .neto{font-family:"Fraunces",serif;font-size:2.7rem;font-weight:800;letter-spacing:-.02em;
-    line-height:1.02;margin-top:6px}
-  @media(max-width:380px){.neto{font-size:2.2rem}}
-  .neto .cents{font-size:1.35rem;opacity:.6}
-  .result .sub{font-size:.82rem;color:#bccae2;margin-top:6px}
+/* ===== Inputs ===== */
+.inp{
+  width:100%;padding:12px 13px;border:1px solid var(--linea);border-radius:13px;font-size:1rem;font-weight:700;color:var(--tinta);
+  background:var(--bg);box-shadow:0 2px 4px rgba(15,42,87,.08) inset,0 1px 0 rgba(255,255,255,.6);
+  transition:border-color .15s,box-shadow .15s;min-height:46px}
+:root[data-theme="dark"] .inp{background:#081227;box-shadow:0 2px 6px rgba(0,0,0,.4) inset}
+.inp:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3.5px rgba(47,111,224,.18),0 2px 4px rgba(15,42,87,.08) inset}
+.inp-pre{position:relative}
+.inp-pre span{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--gris-2);pointer-events:none}
+.inp-pre .inp{padding-left:30px}
 
-  .breakdown{background:rgba(255,255,255,.05);padding:8px 22px 20px}
-  .ln{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;
-    padding:10px 0;border-bottom:1px solid rgba(255,255,255,.09)}
-  .ln:last-child{border-bottom:none}
-  .ln .k{color:#cdd7ea;min-width:0;overflow-wrap:anywhere}
-  .ln .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;flex:0 0 auto}
-  .ln.add .v{color:var(--verde-claro)}
-  .ln.sub .v{color:var(--rojo-claro)}
-  .ln.total{margin-top:8px;padding-top:14px;border-top:2px solid rgba(124,194,66,.4);font-size:1.02rem}
-  .ln.total .k{font-weight:800;color:#fff}
-  .ln.total .v{font-weight:800;font-size:1.12rem}
-  .ln.grand{margin-top:4px}
-  .ln.grand .k{font-family:"Fraunces",serif}
-  .ln.grand .v{color:var(--verde-claro);font-size:1.2rem}
-  .group-title{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
-    color:var(--verde-claro);font-weight:800;margin:16px 0 2px;padding-top:8px}
+/* Stepper */
+.stepper{display:flex;align-items:stretch;gap:8px}
+.stepper .inp{text-align:center;flex:1;min-width:0}
+.sbtn{
+  width:46px;flex:0 0 46px;border-radius:13px;border:1px solid var(--linea);cursor:pointer;font-size:1.3rem;font-weight:800;color:var(--navy-3);
+  background:linear-gradient(180deg,var(--card),var(--card-2));
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 4px 0 var(--edge),0 6px 10px rgba(15,42,87,.1);
+  transition:transform .08s,box-shadow .08s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+:root[data-theme="dark"] .sbtn{color:#9cc0ff;box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 4px 0 var(--edge)}
+.sbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
 
-  .ref{
-    margin-top:18px;background:var(--crema-2);border:1px solid var(--linea);
-    border-left:4px solid var(--verde);border-radius:10px;padding:13px 15px;
-    font-size:.78rem;color:var(--gris);line-height:1.5;
-  }
-  .ref b{color:var(--azul)}
+/* Switch 3D */
+.srow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px dashed var(--linea)}
+.srow:first-child{border-top:none;padding-top:2px}
+.srow .t{font-weight:700;font-size:.92rem}
+.srow .s{font-size:.74rem;color:var(--gris);margin-top:2px}
+.srow.disabled{opacity:.5}
+.tag{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.tag.amb{background:rgba(230,164,23,.16);color:#a87400}
+:root[data-theme="dark"] .tag.amb{color:#f3c55c}
+.tag.blue{background:rgba(47,111,224,.14);color:var(--azul)}
+.sw{position:relative;width:56px;height:32px;flex:0 0 auto}
+.sw input{opacity:0;width:0;height:0;position:absolute}
+.sw .tr{position:absolute;inset:0;border-radius:999px;cursor:pointer;background:#c5cfdf;
+  box-shadow:0 2px 5px rgba(0,0,0,.18) inset;transition:background .2s}
+:root[data-theme="dark"] .sw .tr{background:#2a3b5f}
+.sw .tr::before{content:"";position:absolute;width:26px;height:26px;left:3px;top:3px;border-radius:50%;
+  background:linear-gradient(180deg,#fff,#e3e9f3);box-shadow:0 1px 0 #fff inset,0 2px 0 #b5c0d3,0 3px 8px rgba(0,0,0,.25);transition:transform .22s cubic-bezier(.3,1.4,.6,1)}
+.sw input:checked + .tr,:root[data-theme="dark"] .sw input:checked + .tr{background:linear-gradient(180deg,#3fb345,#25882d)}
+.sw input:checked + .tr::before{transform:translateX(24px)}
+.sw input:focus-visible + .tr{outline:3px solid rgba(77,141,255,.6);outline-offset:2px}
+.sw input:disabled + .tr{cursor:not-allowed}
 
-  details{margin-top:14px;background:var(--crema-2);border-radius:12px;
-    padding:14px 16px;border:1px solid var(--linea)}
-  summary{font-weight:700;font-size:.86rem;cursor:pointer;color:var(--azul-claro);list-style:none}
-  summary::-webkit-details-marker{display:none}
-  summary::before{content:"+ ";font-weight:800}
-  details[open] summary::before{content:"– "}
-  details p{font-size:.8rem;color:var(--gris);margin-top:10px;line-height:1.55}
-  details p b{color:var(--tinta)}
+details.adv{margin-top:14px;border-top:1px dashed var(--linea);padding-top:12px}
+details.adv summary{cursor:pointer;font-weight:700;font-size:.82rem;color:var(--azul);list-style:none}
+details.adv summary::-webkit-details-marker{display:none}
+details.adv summary::before{content:"▸ ";display:inline-block;transition:transform .2s}
+details.adv[open] summary::before{transform:rotate(90deg)}
+details.adv > div{margin-top:12px}
 
-  footer{text-align:center;margin-top:30px}
-  .ig{
-    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
-    background:var(--card);border:1px solid var(--linea);border-radius:999px;
-    padding:10px 18px;font-weight:700;color:var(--azul-claro);font-size:.9rem;
-    box-shadow:var(--sombra);transition:transform .15s,box-shadow .15s;
-  }
-  .ig:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(29,58,107,.16)}
-  .ig svg{width:19px;height:19px}
-  .copyright{font-size:.74rem;color:var(--gris-2);margin-top:18px;line-height:1.7}
-  .copyright b{color:var(--gris)}
-  /* Acciones del resultado (compartir / copiar) */
-  .acciones{display:flex;gap:10px;flex-wrap:wrap;padding:4px 22px 22px;
-    position:relative;z-index:1}
-  .acciones button{flex:1;min-width:150px;border:none;border-radius:12px;padding:13px 14px;
-    font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    transition:transform .1s ease,filter .15s ease,background .2s ease}
-  .acciones button:active{transform:translateY(1px)}
-  .acciones button svg{width:18px;height:18px;flex:0 0 auto}
-  .b-wa{background:#25d366;color:#fff}
-  .b-wa:hover{filter:brightness(1.05)}
-  .b-copy{background:rgba(255,255,255,.14);color:#fff}
-  .b-copy:hover{background:rgba(255,255,255,.22)}
-  .b-copy.ok{background:var(--verde)}
-  /* ===== Mejoras visuales + responsive extra ===== */
-  .card{transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
-  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
-                    background:linear-gradient(90deg,var(--verde),var(--azul-claro))}
-  .card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(29,58,107,.16)}
-  .card h2 .num{background:linear-gradient(150deg,var(--azul),var(--azul-claro));
-                    box-shadow:0 4px 10px rgba(29,58,107,.35)}
-  .chip{transition:transform .15s ease, border-color .15s ease, background .15s ease, color .15s ease}
-  .chip.on{transform:translateY(-1px)}
-  .toggle .track{box-shadow:inset 0 1px 3px rgba(0,0,0,.14)}
-  select:hover,input[type=number]:hover{border-color:var(--gris-2)}
-  .result{position:relative}
-  .result::after{content:"";position:absolute;inset:0;pointer-events:none;
-                     background:radial-gradient(520px 220px at 92% -12%, rgba(124,194,66,.18), transparent 62%)}
-  @keyframes pulseResult{0%{transform:scale(1)}30%{transform:scale(1.012)}100%{transform:scale(1)}}
-  .result.pulse{animation:pulseResult .45s ease}
-  @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-  .card,.ref,details,footer{animation:fadeInUp .55s ease both}
-  .card:nth-of-type(1){animation-delay:.02s}
-  .card:nth-of-type(2){animation-delay:.08s}
-  .card:nth-of-type(3){animation-delay:.14s}
-  .card:nth-of-type(4){animation-delay:.20s}
-  .card:nth-of-type(5){animation-delay:.26s}
-  .ref{animation-delay:.30s}
-  details{animation-delay:.34s}
-  footer{animation-delay:.4s}
-  @media (prefers-reduced-motion: reduce){
-        .card,.ref,details,footer,.result.pulse{animation:none !important}
-        .card:hover{transform:none}
-  }
-  @media(max-width:360px){
-        .wrap{padding-left:12px;padding-right:12px}
-        header.hero{padding:22px 16px 26px}
-        header.hero h1{font-size:1.6rem}
-        .card{padding:16px}
-        .neto{font-size:2rem}
-        .chip{padding:8px 13px;font-size:.8rem}
-        .num-mini{width:70px}
-  }
-  @media(min-width:900px){
-        .wrap{max-width:860px}
-  }
-  /* Botón de tema (claro/oscuro) */
-  .theme-toggle{position:absolute;top:14px;right:14px;z-index:3;
-    width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);
-    background:rgba(255,255,255,.12);color:#fff;font-size:1.15rem;cursor:pointer;
-    display:grid;place-items:center;line-height:1;
-    transition:background .15s ease,transform .15s ease}
-  .theme-toggle:hover{background:rgba(255,255,255,.24);transform:scale(1.06)}
-  .theme-toggle:active{transform:scale(.96)}
+/* ===== RESULTADO ===== */
+.result{
+  position:relative;overflow:hidden;border-radius:26px;color:#fff;
+  background:linear-gradient(165deg,#1a4590 0%,#0f2a57 40%,#0a1d3f 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 8px 0 #06122a,0 26px 50px -8px rgba(10,29,63,.55);
+}
+.result::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(420px 220px at 95% -10%, rgba(143,209,79,.25), transparent 65%),radial-gradient(380px 260px at -10% 0%, rgba(77,141,255,.3), transparent 60%)}
+.result::after{content:"";position:absolute;left:0;right:0;top:0;height:50%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),transparent)}
+.res-top{position:relative;z-index:1;padding:22px 22px 14px}
+.res-top .lbl2{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--verde-claro);font-weight:800}
+.res-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.pill{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14)}
+.neto{font-family:"Sora";font-size:2.7rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:12px;
+  text-shadow:0 3px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.35);font-variant-numeric:tabular-nums}
+.neto .c{font-size:1.3rem;opacity:.6}
+@media(max-width:380px){.neto{font-size:2.2rem}}
+.res-sub{font-size:.8rem;color:#bfcde6;margin-top:8px}
+
+.compo{position:relative;z-index:1;margin:6px 22px 4px}
+.bar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.1);
+  box-shadow:0 2px 4px rgba(0,0,0,.35) inset}
+.bar i{display:block;height:100%;transition:width .5s cubic-bezier(.3,1,.4,1)}
+.bar .b1{background:linear-gradient(180deg,#6fa4ff,#2f6fe0)}
+.bar .b2{background:linear-gradient(180deg,#a7e070,#33a63a)}
+.bar .b3{background:linear-gradient(180deg,#ffb0a6,#d9483b)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:9px;font-size:.72rem;color:#c8d5ec}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .l1::before{background:#4d8dff}.legend .l2::before{background:#5fbf45}.legend .l3::before{background:#ef6e60}
+
+.bd{position:relative;z-index:1;padding:6px 22px 18px}
+.gt{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-claro);font-weight:800;margin:16px 0 4px;display:flex;justify-content:space-between}
+.gt span:last-child{color:#c9d6ee;letter-spacing:.02em;text-transform:none;font-size:.78rem}
+.ln{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.ln:last-child{border-bottom:none}
+.ln .k{color:#d2dcf0;min-width:0;overflow-wrap:anywhere}
+.ln .v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ln.add .v{color:#b7e98a}
+.ln.nr .v{color:#9fd8ff}
+.ln.sub .v{color:var(--rojo-claro)}
+.ln.zero .v{color:#c9d6ee;font-weight:600}
+.ln.tot{border-top:2px solid rgba(143,209,79,.35);margin-top:6px;padding-top:12px;border-bottom:none}
+.ln.tot .k{color:#fff;font-weight:800}
+.ln.tot .v{font-size:1rem}
+.ln.grand .k{font-family:"Sora";font-size:1rem}
+.ln.grand .v{color:var(--verde-claro);font-size:1.15rem;font-family:"Sora"}
+.note{position:relative;z-index:1;margin:0 22px 12px;font-size:.74rem;color:#d5e0f3;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;line-height:1.45}
+.note.warn{border-color:rgba(230,164,23,.4);background:rgba(230,164,23,.12)}
+.note b{color:#fff}
+.err-box{position:relative;z-index:1;margin:6px 22px 20px;padding:14px;border-radius:14px;background:rgba(217,72,59,.18);border:1px solid rgba(255,180,170,.4);font-size:.85rem}
+.acts{position:relative;z-index:1;display:flex;gap:10px;padding:4px 22px 22px;flex-wrap:wrap}
+.btn3d{flex:1;min-width:140px;border:none;cursor:pointer;border-radius:15px;padding:13px 14px;font-size:.9rem;font-weight:800;color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;
+  transition:transform .08s,box-shadow .08s,filter .15s;-webkit-tap-highlight-color:transparent}
+.btn3d svg{width:18px;height:18px;flex:0 0 auto}
+.btn3d:active{transform:translateY(4px)}
+.b-wa{background:linear-gradient(180deg,#3ee07d,#1fb457);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 5px 0 #127a39,0 10px 20px rgba(31,180,87,.35)}
+.b-wa:active{box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 1px 0 #127a39}
+.b-copy{background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.1));box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 5px 0 rgba(0,0,0,.35),0 10px 20px rgba(0,0,0,.25)}
+.b-copy:active{box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 1px 0 rgba(0,0,0,.35)}
+.b-copy.ok{background:linear-gradient(180deg,#45b94b,#24852c)}
+.result.pulse .neto{animation:pulse .4s ease}
+@keyframes pulse{40%{transform:scale(1.03)}}
+
+/* barra fija móvil */
+.mbar{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 10px 10px 16px;border-radius:18px;color:#fff;
+  background:linear-gradient(180deg,#1b4690,#0c2148);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 5px 0 #06122a,0 16px 30px rgba(0,0,0,.4);
+  transform:translateY(160%);transition:transform .3s ease}
+.mbar.on{transform:none}
+.mbar .ml{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-claro);font-weight:800}
+.mbar .mv{font-family:"Sora";font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
+.mbar button{border:none;border-radius:12px;padding:10px 14px;font-weight:800;color:#0a1d3f;cursor:pointer;
+  background:linear-gradient(180deg,#b9ee87,#7cc242);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 4px 0 #3f7d1a}
+.mbar button:active{transform:translateY(3px);box-shadow:0 1px 0 #3f7d1a}
+@media(min-width:980px){.mbar{display:none}}
+
+/* ===== Info ===== */
+.info{margin-top:18px;display:grid;gap:14px}
+.info details{background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--linea);border-radius:16px;padding:14px 16px;box-shadow:var(--sombra-card)}
+.info summary{cursor:pointer;font-weight:700;font-size:.9rem;font-family:"Sora";list-style:none;display:flex;justify-content:space-between;gap:10px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";font-weight:800;color:var(--azul)}
+.info details[open] summary::after{content:"–"}
+.info .body{margin-top:12px;font-size:.82rem;color:var(--gris);line-height:1.6}
+.info .body p+p{margin-top:8px}
+.info .body b{color:var(--tinta)}
+.info .body a{color:var(--azul);font-weight:600}
+.info ul{margin:6px 0 0 18px}
+.info li{margin:4px 0}
+.disc{font-size:.76rem;color:var(--gris);background:var(--bg-2);border:1px solid var(--linea);border-left:4px solid var(--ambar);border-radius:12px;padding:12px 14px;line-height:1.5}
+
+/* ===== Footer Metrics Lab ===== */
+footer{margin-top:28px;text-align:center}
+.ml-card{display:block;max-width:520px;margin:0 auto;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;
+  background:#0a1d3f;box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 7px 0 #040c1d,0 24px 44px -10px rgba(10,29,63,.6);
+  transition:transform .25s ease,box-shadow .25s ease;transform:perspective(800px) rotateX(4deg)}
+.ml-card:hover{transform:perspective(800px) rotateX(0) translateY(-3px)}
+.ml-card img{width:100%;display:block}
+.ml-card .cta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;font-size:.84rem;font-weight:700;
+  background:linear-gradient(180deg,#0f2a57,#0a1d3f);border-top:1px solid rgba(255,255,255,.08)}
+.ml-card .cta span:last-child{color:#7fb0ff}
+.ig{display:inline-flex;align-items:center;gap:9px;margin-top:18px;text-decoration:none;border-radius:999px;padding:10px 18px;font-weight:700;font-size:.88rem;
+  color:var(--tinta);background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--linea);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 4px 0 var(--edge),0 8px 16px rgba(15,42,87,.1)}
+.ig:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+.ig svg{width:18px;height:18px}
+.copy{font-size:.74rem;color:var(--gris-2);margin-top:16px;line-height:1.7}
+.copy b{color:var(--gris)}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div class="shell">
 <header class="hero">
-  <button id="themeBtn" class="theme-toggle" type="button" aria-label="Cambiar entre modo claro y oscuro" onclick="toggleTema()">🌙</button>
   <div class="hero-in">
-    <!-- Logo SOEA recreado en SVG -->
-          <img class="logo" src="logo.png" alt="SOEA Aceiteros San Lorenzo">
-    <div class="hero-txt">
-      <div class="badge"><span class="dot"></span>SOEA · Aceiteros San Lorenzo</div>
-      <h1>Calculadora de sueldo</h1>
-      <p>Estimá tu neto de bolsillo con la escala 2026: categoría, antigüedad, adicionales, horas extra, feriados y Ganancias.</p>
+    <div class="topbar">
+      <div class="wx-wrap">
+        <button type="button" class="weather" id="wx" aria-expanded="false" aria-controls="wxPop">
+          <span class="ico">⏳</span><span class="temp">--°</span><span class="loc">San Lorenzo</span>
+        </button>
+        <div class="wx-pop" id="wxPop" role="dialog" aria-label="Clima en San Lorenzo"></div>
+      </div>
+      <button id="themeBtn" class="theme-toggle" type="button" aria-label="Cambiar modo claro/oscuro">🌙</button>
+    </div>
+    <div class="brand">
+      <div class="logo-tile"><img src="logo.png" alt="Logo SOEA Aceiteros San Lorenzo"></div>
+      <div>
+        <div class="badge"><span class="dot"></span>Escala 2026 · CCT 391/04</div>
+        <h1>Calculadora de sueldo aceitero</h1>
+        <p class="lead">Estimá tu neto de bolsillo: categorías A a F, julio a diciembre 2026, adicionales, horas extra, aportes y Ganancias.</p>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="wrap">
+<main class="wrap">
+  <div class="grid-main">
+    <div class="col-form">
 
-  <section class="card">
-    <h2><span class="num">1</span>Tu liquidación</h2>
-    <div class="grid">
-      <div>
-        <label for="mes">Mes a calcular</label>
-        <select id="mes">
-          <option value="jul">Julio – Agosto 2026</option>
-          <option value="sep">Septiembre – Noviembre 2026</option>
-          <option value="dic">Diciembre 2026</option>
-        </select>
-        <div class="hint">Cada período mantiene el mismo básico de la paritaria.</div>
-      </div>
-      <div>
-        <label for="cat">Categoría</label>
-        <select id="cat">
-          <option value="A">A</option><option value="B">B</option>
-          <option value="C" selected>C</option><option value="D">D</option>
-          <option value="E">E</option><option value="F">F</option>
-        </select>
-      </div>
-      <div>
-        <label for="ant">Años de antigüedad</label>
-        <input type="number" id="ant" min="0" max="50" step="1" value="14" inputmode="numeric">
-        <div class="hint">1% del básico conformado por año.</div>
-      </div>
-      <div>
-        <label for="empresa">Adicional empresa (%)</label>
-        <input type="number" id="empresa" min="0" step="0.01" value="8.42" inputmode="decimal">
-        <div class="hint">En tu recibo da ~8,42% del básico. Editable.</div>
-      </div>
-    </div>
-  </section>
+      <section class="card">
+        <h2><span class="num">1</span>Mes y categoría</h2>
+        <div class="field">
+          <span class="lbl">Mes a liquidar</span>
+          <div class="keys cols-6 mes" id="k-mes" role="radiogroup" aria-label="Mes"></div>
+          <div class="hint" id="h-mes"></div>
+        </div>
+        <div class="field">
+          <span class="lbl">Categoría</span>
+          <div class="keys cols-6" id="k-cat" role="radiogroup" aria-label="Categoría"></div>
+        </div>
+      </section>
 
-  <section class="card">
-    <h2><span class="num">2</span>Adicionales sobre básico</h2>
-    <label>Turnos rotativos</label>
-    <div class="chips" id="turnos">
-      <button type="button" class="chip on" data-v="0">Sin turnos</button>
-      <button type="button" class="chip" data-v="18">18%</button>
-      <button type="button" class="chip" data-v="30">30%</button>
-    </div>
-    <label style="margin-top:18px">Título</label>
-    <div class="chips" id="titulo">
-      <button type="button" class="chip on" data-v="0">Sin título</button>
-      <button type="button" class="chip" data-v="3">3%</button>
-      <button type="button" class="chip" data-v="6">6%</button>
-    </div>
-    <div class="switch-row" style="margin-top:16px;border-top:1px dashed var(--linea);padding-top:14px">
-      <div><div class="t">Presentismo</div><div class="s">Suma fija según el mes</div></div>
-      <label class="toggle"><input type="checkbox" id="presentismo" checked><span class="track"></span></label>
-    </div>
-  </section>
+      <section class="card">
+        <h2><span class="num">2</span>Adicionales<small>sobre básico conformado</small></h2>
+        <div class="field" id="f-ant">
+          <label class="lbl" for="ant">Años de antigüedad (1% por año)</label>
+          <div class="stepper">
+            <button type="button" class="sbtn" data-step="ant" data-d="-1" aria-label="Restar un año">−</button>
+            <input class="inp" id="ant" type="text" inputmode="numeric" autocomplete="off">
+            <button type="button" class="sbtn" data-step="ant" data-d="1" aria-label="Sumar un año">+</button>
+          </div>
+          <div class="err-msg"></div>
+        </div>
+        <div class="field">
+          <span class="lbl">Turnos rotativos</span>
+          <div class="keys cols-3" id="k-turno" role="radiogroup" aria-label="Turnos"></div>
+        </div>
+        <div class="field">
+          <span class="lbl">Título</span>
+          <div class="keys cols-3" id="k-titulo" role="radiogroup" aria-label="Título"></div>
+        </div>
+        <div class="field">
+          <div class="srow" style="padding-top:4px">
+            <div><div class="t">Presentismo</div><div class="s" id="s-pres"></div></div>
+            <label class="sw"><input type="checkbox" id="presentismo"><span class="tr"></span></label>
+          </div>
+        </div>
+        <details class="adv" id="adv-emp">
+          <summary>Adicional propio de la empresa</summary>
+          <div>
+            <div class="keys cols-3" id="k-empresaModo" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px"></div>
+            <div class="field" id="f-empresaValor">
+              <div class="inp-pre"><span id="emp-pre">%</span><input class="inp" id="empresaValor" type="text" inputmode="decimal" autocomplete="off"></div>
+              <div class="err-msg"></div>
+              <div class="hint">Solo si tu empresa paga un adicional propio. El porcentaje se calcula sobre el básico conformado; es remunerativo y <b>no recibe el incremento NR</b> del acuerdo.</div>
+            </div>
+          </div>
+        </details>
+      </section>
 
-  <section class="card">
-    <h2><span class="num">3</span>Horas extras y feriados</h2>
-    <div class="grid">
-      <div>
-        <label for="he100">Horas extra 100%</label>
-        <input type="number" id="he100" min="0" step="0.5" value="0" inputmode="decimal">
-        <div class="hint">Domingo, feriado, sáb después de 13h.</div>
+      <section class="card">
+        <h2><span class="num">3</span>Horas extra y feriados</h2>
+        <div class="two">
+          <div class="field" id="f-he50" style="margin:0">
+            <label class="lbl" for="he50">Horas extra al 50%</label>
+            <input class="inp" id="he50" type="text" inputmode="decimal" autocomplete="off">
+            <div class="err-msg"></div>
+            <div class="hint">Fuera de tu jornada, días hábiles. Acepta fracciones (ej. 2,5).</div>
+          </div>
+          <div class="field" id="f-he100" style="margin:0">
+            <label class="lbl" for="he100">Horas extra al 100%</label>
+            <input class="inp" id="he100" type="text" inputmode="decimal" autocomplete="off">
+            <div class="err-msg"></div>
+            <div class="hint">Sábado después de 13 h, domingo, o horas fuera de turno en feriado.</div>
+          </div>
+        </div>
+        <div class="two" style="margin-top:16px">
+          <div class="field" id="f-feriados" style="margin:0">
+            <label class="lbl" for="feriados">Feriados trabajados (jornadas)</label>
+            <div class="stepper">
+              <button type="button" class="sbtn" data-step="feriados" data-d="-1" aria-label="Restar">−</button>
+              <input class="inp" id="feriados" type="text" inputmode="numeric" autocomplete="off">
+              <button type="button" class="sbtn" data-step="feriados" data-d="1" aria-label="Sumar">+</button>
+            </div>
+            <div class="err-msg"></div>
+          </div>
+          <div class="field" id="f-horasJornada" style="margin:0">
+            <label class="lbl" for="horasJornada">Horas de tu jornada</label>
+            <input class="inp" id="horasJornada" type="text" inputmode="decimal" autocomplete="off">
+            <div class="err-msg"></div>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:10px">Feriado dentro de tu turno: el día ya está pago en el mensual, así que se suma <b>una jornada más</b> (pago doble). No cargues esas mismas horas como extra al 100%.</div>
+        <div class="hint" id="vhora" style="font-weight:700;color:var(--verde-2);margin-top:8px"></div>
+        <details class="adv">
+          <summary>Divisor del valor hora <span class="tag amb">a verificar</span></summary>
+          <div class="field" id="f-divisor">
+            <input class="inp" id="divisor" type="text" inputmode="decimal" autocomplete="off">
+            <div class="err-msg"></div>
+            <div class="hint">Valor hora = (básico conformado + antigüedad + turnos + título + adicional empresa, con el incremento NR) ÷ divisor. El divisor no figura en la documentación consultada; usá el de tu recibo (lo habitual es entre 172 y 200).</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2><span class="num">4</span>Aportes y descuentos</h2>
+        <div class="srow">
+          <div><div class="t">Aportes de ley</div><div class="s">Jubilación 11% · INSSJP 3% · Obra social 3% (con tope ANSES)</div></div>
+          <label class="sw"><input type="checkbox" id="dLey"><span class="tr"></span></label>
+        </div>
+        <div class="srow">
+          <div><div class="t">Afiliado/a al SOEA</div><div class="s">Cuota sindical 2% + seguro de sepelio 1,5%</div></div>
+          <label class="sw"><input type="checkbox" id="dSoea"><span class="tr"></span></label>
+        </div>
+        <div class="srow" id="row-ret">
+          <div><div class="t">Retención extraordinaria art. 51</div><div class="s" id="s-ret"></div></div>
+          <label class="sw"><input type="checkbox" id="dRet"><span class="tr"></span></label>
+        </div>
+        <div class="srow">
+          <div><div class="t">Obra social y sindical sobre sumas NR <span class="tag amb">a verificar</span></div><div class="s">Activalo solo si tu recibo los descuenta sobre el incremento no remunerativo.</div></div>
+          <label class="sw"><input type="checkbox" id="aportesNR"><span class="tr"></span></label>
+        </div>
+        <div class="field" id="f-otrosDesc" style="margin-top:10px">
+          <label class="lbl" for="otrosDesc">Otros descuentos fijos (préstamos, aportes voluntarios…)</label>
+          <div class="inp-pre"><span>$</span><input class="inp" id="otrosDesc" type="text" inputmode="decimal" autocomplete="off"></div>
+          <div class="err-msg"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="num">5</span>Impuesto a las Ganancias</h2>
+        <div class="keys cols-3" id="k-ganModo" role="radiogroup" aria-label="Modo Ganancias"></div>
+        <div id="gan-est">
+          <div class="srow" style="margin-top:12px">
+            <div><div class="t">Cónyuge o conviviente a cargo</div><div class="s">Solo si reside en el país y no tiene ingresos anuales mayores al mínimo no imponible.</div></div>
+            <label class="sw"><input type="checkbox" id="conyuge"><span class="tr"></span></label>
+          </div>
+          <div class="two" style="margin-top:6px">
+            <div class="field" id="f-hijos" style="margin:0">
+              <label class="lbl" for="hijos">Hijos menores de 18 a cargo</label>
+              <div class="stepper">
+                <button type="button" class="sbtn" data-step="hijos" data-d="-1" aria-label="Restar">−</button>
+                <input class="inp" id="hijos" type="text" inputmode="numeric" autocomplete="off">
+                <button type="button" class="sbtn" data-step="hijos" data-d="1" aria-label="Sumar">+</button>
+              </div>
+              <div class="err-msg"></div>
+            </div>
+            <div class="field" id="f-hijosIncap" style="margin:0">
+              <label class="lbl" for="hijosIncap">Hijos incapacitados para trabajar</label>
+              <div class="stepper">
+                <button type="button" class="sbtn" data-step="hijosIncap" data-d="-1" aria-label="Restar">−</button>
+                <input class="inp" id="hijosIncap" type="text" inputmode="numeric" autocomplete="off">
+                <button type="button" class="sbtn" data-step="hijosIncap" data-d="1" aria-label="Sumar">+</button>
+              </div>
+              <div class="err-msg"></div>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Deducción por hijos</span>
+            <div class="keys cols-3" id="k-pctHijos" style="grid-template-columns:repeat(2,1fr)"></div>
+            <div class="hint">100% si el otro progenitor no la deduce; 50% si la comparten.</div>
+          </div>
+        </div>
+        <div id="gan-man" class="field" style="display:none;margin-top:14px">
+          <div id="f-ganManual">
+            <label class="lbl" for="ganManual">Retención de Ganancias de tu recibo</label>
+            <div class="inp-pre"><span>$</span><input class="inp" id="ganManual" type="text" inputmode="decimal" autocomplete="off"></div>
+            <div class="err-msg"></div>
+            <div class="hint">Reemplaza a la estimación: no se suman las dos.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-res" id="resultado">
+      <section class="result" id="result" aria-live="polite"></section>
+      <div class="info">
+        <div class="disc"><b>Herramienta independiente y orientativa.</b> No es oficial del SOEA ni de ninguna empresa. Los importes pueden diferir de tu recibo (convenios de planta, ausencias, Ganancias acumulada, etc.).</div>
       </div>
-      <div>
-        <label for="he50">Horas extra 50%</label>
-        <input type="number" id="he50" min="0" step="0.5" value="0" inputmode="decimal">
-        <div class="hint">Días hábiles fuera de jornada.</div>
-      </div>
-      <div>
-        <label for="feriados">Feriados trabajados (jornadas)</label>
-        <input type="number" id="feriados" min="0" max="20" step="1" value="0" inputmode="numeric">
-        <div class="hint">Jornada de 8h pagada al 100% (doble).</div>
-      </div>
     </div>
-    <div class="hint" id="vhora" style="margin-top:12px;font-weight:700;color:var(--verde-2)"></div>
-  </section>
-
-  <section class="card">
-    <h2><span class="num">4</span>Situación familiar</h2>
-    <div class="switch-row">
-      <div><div class="t">Casado/a o conviviente</div><div class="s">Deduce cónyuge a cargo en Ganancias</div></div>
-      <label class="toggle"><input type="checkbox" id="casado"><span class="track"></span></label>
-    </div>
-    <div class="switch-row">
-      <div><div class="t">Hijos a cargo</div><div class="s">Menores de 24 años · deducción por hijo</div></div>
-      <input type="number" id="hijos" class="num-mini" min="0" max="12" step="1" value="0" inputmode="numeric">
-    </div>
-  </section>
-
-  <section class="card">
-    <h2><span class="num">5</span>Deducciones</h2>
-    <div class="switch-row">
-      <div><div class="t">Aportes de ley (17%)</div><div class="s">Jubilación 11% · INSSJP 3% · Obra social 3%</div></div>
-      <label class="toggle"><input type="checkbox" id="d_ley" checked><span class="track"></span></label>
-    </div>
-    <div class="switch-row">
-      <div><div class="t">Cuota sindical SOEA</div><div class="s">Sindical 2% + seguro sepelio 1,5%</div></div>
-      <label class="toggle"><input type="checkbox" id="d_soea" checked><span class="track"></span></label>
-    </div>
-    <div class="switch-row">
-      <div><div class="t">Retención 40% art.51</div><div class="s">Solo sobre el 10% NR de jul-26</div></div>
-      <label class="toggle"><input type="checkbox" id="d_ret"><span class="track"></span></label>
-    </div>
-    <div class="switch-row">
-      <div><div class="t">Impuesto a las Ganancias</div><div class="s">Cálculo automático (escala 2do sem. 2026)</div></div>
-      <label class="toggle"><input type="checkbox" id="d_gan" checked><span class="track"></span></label>
-    </div>
-  </section>
-
-  <section class="result" id="result"></section>
-
-  <div class="ref">
-    <b>Valores de referencia tomados de la tabla</b> de la Nueva Escala Salarial SOEA San Lorenzo 2026 y de las deducciones de ARCA vigentes para el 2do semestre 2026 (julio–diciembre, actualizadas 16,85% por IPC). Es una estimación orientativa; los importes pueden diferir del recibo oficial.
   </div>
 
-  <details>
-    <summary>¿De dónde salen los números?</summary>
-    <p><b>Escala salarial:</b> básicos conformados, NR y presentismo de la Nueva Escala SOEA San Lorenzo 2026. Julio y septiembre llevan incremento <b>no remunerativo</b> (10% y 6%); diciembre es todo remunerativo con sus adicionales de acuerdo.</p>
-    <p><b>Adicionales:</b> antigüedad 1%/año, turnos 18%/30%, título 3%/6%, sobre el básico conformado.</p>
-    <p><b>Horas extra:</b> valor hora = bruto remunerativo ÷ 172. Al 50% se paga ×1,5; al 100% (y feriados) ×2.</p>
-    <p><b>Aportes</b> calibrados con recibo Vicentin: Jubilación 11%, INSSJP 3%, Obra social 3%, Cuota sindical 2%, Seguro sepelio 1,5%.</p>
-    <p><b>Ganancias (4ta cat.):</b> escala progresiva Art.94 y deducciones personales del artículo 30, vigentes para el 2do semestre 2026 (julio–diciembre), publicadas por ARCA con la actualización por IPC (mínimo no imponible, deducción especial de empleados, cónyuge, hijos). Cálculo mensualizado; la liquidación oficial es acumulada anual y puede incluir otras deducciones (SIRADIG, alquiler, prepaga).</p>
-  </details>
+  <div class="info">
+    <details>
+      <summary>¿Cómo se calcula?</summary>
+      <div class="body">
+        <p><b>Acuerdo 2026:</b> en julio se paga un 10% no remunerativo y en septiembre un 6% más, <b>ambos sobre el básico conformado de junio</b> (16% en total, no compuesto). Impactan en antigüedad, turnos y título, y actualizan el presentismo. En diciembre todo pasa a ser remunerativo.</p>
+        <p><b>Julio a noviembre:</b> remunerativo = conformado de junio + adicionales. El incremento NR se toma como la diferencia entre el conformado publicado del período y el de junio, y se aplica en la misma proporción a los adicionales.</p>
+        <p><b>Diciembre:</b> básico + adicional 20-05-14 + adicional 15-06-15 = conformado, y sobre ese conformado se aplican antigüedad, turnos y título. La suma de componentes difiere en $1 del conformado publicado en las categorías A, C, E y F por redondeo de la tabla; se usan los componentes.</p>
+        <p><b>Presentismo:</b> importe publicado del mes. De julio a noviembre la parte remunerativa es el presentismo de junio ($232.865, deducido de la tabla) y el resto es NR.</p>
+        <p><b>Retención art. 51:</b> 40% del 10% de julio, en dos cuotas: agosto y septiembre.</p>
+        <p><b>Aportes:</b> jubilación, INSSJP y obra social sobre lo remunerativo con el tope de ANSES del mes; cuota sindical y sepelio sobre lo remunerativo, sin tope. Las contribuciones del empleador no se descuentan.</p>
+        <p><b>Ganancias estimada:</b> se supone que el mes se repite todo el año, con aguinaldo prorrateado (13 sueldos), menos aportes y deducciones personales anuales 2026 de ARCA, y la escala del art. 94. Las sumas NR y las horas extra se consideran gravadas. La retención real es acumulada desde enero y puede incluir deducciones de SiRADIG (alquiler, prepaga, etc.); si la conocés, usá el modo manual.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Pendiente de verificar</summary>
+      <div class="body">
+        <ul>
+          <li>Si las sumas NR llevan obra social y cuota sindical: el comunicado no lo informa (opción configurable).</li>
+          <li>Divisor del valor hora y conceptos que lo integran: no publicados en el comunicado.</li>
+          <li>Topes ANSES de noviembre y diciembre: aún no publicados; se usa el de octubre.</li>
+          <li>Tratamiento de horas extra y feriados en Ganancias: se consideran gravados.</li>
+          <li>Las sumas fijas NR de mayo y junio se pagaron antes del 10/07 y no se incluyen.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Fuentes y vigencia</summary>
+      <div class="body">
+        <ul>
+          <li><a href="https://soea.com.ar/noticia/acuerdo-salarial-del-16-escalonado-para-proteger-el-salario" target="_blank" rel="noopener">SOEA · Acuerdo salarial del 16% escalonado</a> (01/07/2026).</li>
+          <li>Escala salarial SOEA San Lorenzo 2026 (jul–dic), CCT 391/04: básicos, adicionales, presentismo y cuotas de retención.</li>
+          <li><a href="https://www.afip.gob.ar/gananciasYBienes/ganancias/personas-humanas-sucesiones-indivisas/deducciones/documentos/Deducciones-personales-art-30-jul-dic-2026.pdf" target="_blank" rel="noopener">ARCA · Deducciones personales art. 30, jul–dic 2026</a>.</li>
+          <li><a href="https://www.afip.gob.ar/gananciasYBienes/ganancias/personas-humanas-sucesiones-indivisas/declaracion-jurada/documentos/Tabla-Art-94-LIG-per-jul-a-dic-2026.pdf" target="_blank" rel="noopener">ARCA · Escala art. 94, jul–dic 2026</a>.</li>
+          <li>ANSES · base imponible máxima: Res. 186/2026 (jul), 232/2026 (ago), 257/2026 (sep), 284/2026 (oct).</li>
+          <li>Clima: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
 
   <footer>
+    <a class="ml-card" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
+      <img src="metricslab.jpg" alt="Metrics Lab Agency" loading="lazy">
+      <div class="cta"><span>Desarrollado por Metrics Lab Agency</span><span>Webs, apps y Meta Ads →</span></div>
+    </a>
     <a class="ig" href="https://instagram.com/metricslab.agency" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
       @metricslab.agency
     </a>
-    <div class="copyright">
-      © 2026 Calculadora de Sueldo Aceiteros · Todos los derechos reservados.<br>
-      Desarrollado por <b>Lucas Morosin</b> · Herramienta independiente, no oficial del SOEA.
-    </div>
+    <div class="copy">© 2026 Calculadora de Sueldo Aceiteros · Desarrollada por <b>Lucas Morosin · Metrics Lab Agency</b><br>Herramienta independiente, no oficial del SOEA.</div>
   </footer>
+</main>
+
+<div class="mbar" id="mbar">
+  <div><div class="ml" id="mbar-l">Neto estimado</div><div class="mv" id="mbar-v">$ 0</div></div>
+  <button type="button" id="mbar-b">Ver detalle</button>
+</div>
 </div>
 
+<script src="motor.js"></script>
 <script>
+(function(){
+"use strict";
+const M = window.MotorSOEA;
+const $ = id => document.getElementById(id);
 const fmt = n => "$ " + n.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt0 = n => "$ " + Math.round(n).toLocaleString("es-AR");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-const ESCALA = {
-  jul:{nombre:"Julio – Agosto 2026", nr:0.10, remunerativo:false, pres:256152,
-    A:2400038,B:2576514,C:2792668,D:3020618,E:3734098,F:4059415,
-    ret:{A:48000,B:51500,C:55850,D:60400,E:74682,F:81189}},
-  sep:{nombre:"Septiembre – Noviembre 2026", nr:0.06, remunerativo:false, pres:270123,
-    A:2640042,B:2834165,C:3071935,D:3322680,E:4107508,F:4465357, ret:null},
-  dic:{nombre:"Diciembre 2026", nr:0, remunerativo:true, pres:270123,
-    A:2698368,B:2896804,C:3139475,D:3396255,E:4141925,F:4507841,
-    adic1:44349, adic2:{A:41327,B:47603,C:55671,D:63313,E:145280,F:156741}, ret:null}
-};
-
-// Deducciones personales (Art. 30) y escala Art. 94 vigentes JULIO–DICIEMBRE 2026
-// Fuente: ARCA (RG 4.003, actualización por IPC INDEC jun-26, +16,85%)
-const GAN = {
-  mni: 5585736.93/12,
-  conyuge: 5260643.86/12,
-  hijo: 2652961.90/12,
-  espEmpleado: 26811537.29/12
-};
-const TRAMOS = [
-  {hasta:2168491.89,  fijo:0,           pct:0.05},
-  {hasta:4336983.77,  fijo:108424.59,   pct:0.09},
-  {hasta:6505475.65,  fijo:303588.86,   pct:0.12},
-  {hasta:9758213.49,  fijo:563807.89,   pct:0.15},
-  {hasta:19516426.99, fijo:1051718.57,  pct:0.19},
-  {hasta:29274640.48, fijo:2905779.13,  pct:0.23},
-  {hasta:43911960.73, fijo:5150168.23,  pct:0.27},
-  {hasta:65867941.10, fijo:9102244.70,  pct:0.31},
-  {hasta:Infinity,    fijo:15908598.62, pct:0.35}
-];
-
-function calcGanancias(netoMensual, casado, hijos){
-  let ded = GAN.mni + GAN.espEmpleado;
-  if(casado) ded += GAN.conyuge;
-  ded += hijos * GAN.hijo;
-  const baseAnual = (netoMensual - ded) * 12;
-  if(baseAnual <= 0) return 0;
-  let imp = 0;
-  for(let i=0;i<TRAMOS.length;i++){
-    const t = TRAMOS[i];
-    const pisoPrev = i===0 ? 0 : TRAMOS[i-1].hasta;
-    if(baseAnual <= t.hasta){ imp = t.fijo + (baseAnual - pisoPrev)*t.pct; break; }
-  }
-  return imp/12;
+/* ---------- Estado ---------- */
+const MES_CORTO = {jul:"Jul",ago:"Ago",sep:"Sep",oct:"Oct",nov:"Nov",dic:"Dic"};
+function mesPorDefecto(){
+  const d = new Date(), y = d.getFullYear(), m = d.getMonth();
+  if (y === 2026 && m >= 6) return M.MESES[m-6];
+  if (y > 2026) return "dic";
+  return "jul";
 }
+const TEXT_FIELDS = ["ant","empresaValor","he50","he100","feriados","horasJornada","divisor","otrosDesc","ganManual","hijos","hijosIncap"];
+const BOOL_FIELDS = ["presentismo","dLey","dSoea","dRet","aportesNR","conyuge"];
+let S = Object.assign({}, M.DEFAULTS, {mes: mesPorDefecto()});
+try{
+  const g = JSON.parse(localStorage.getItem("soea_calc_v2")||"null");
+  if (g && typeof g === "object") for (const k in M.DEFAULTS) if (k in g && k !== "mes") S[k] = g[k];
+}catch(e){}
+// Texto crudo de los inputs (para validar sin perder lo tipeado)
+const RAW = {};
+TEXT_FIELDS.forEach(k => RAW[k] = String(S[k]).replace(".", ","));
 
-let turnoSel=0, tituloSel=0;
-function setupChips(id,cb){
-  document.querySelectorAll("#"+id+" .chip").forEach(c=>{
-    c.addEventListener("click",()=>{
-      document.querySelectorAll("#"+id+" .chip").forEach(x=>x.classList.remove("on"));
-      c.classList.add("on"); cb(parseFloat(c.dataset.v));
-    });
+/* ---------- Teclas ---------- */
+function keys(id, opts, field, cls){
+  const box = $(id); box.innerHTML = "";
+  opts.forEach(o => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "key" + (cls ? " "+cls : "");
+    b.setAttribute("role","radio"); b.dataset.v = o.v;
+    b.innerHTML = esc(o.t) + (o.s ? `<small>${esc(o.s)}</small>` : "");
+    b.addEventListener("click", () => { S[field] = typeof S[field] === "number" ? Number(o.v) : o.v; sync(); });
+    box.appendChild(b);
   });
 }
-setupChips("turnos",v=>{turnoSel=v;calc();});
-setupChips("titulo",v=>{tituloSel=v;calc();});
+keys("k-mes", M.MESES.map(m => ({v:m, t:MES_CORTO[m], s:"2026"})), "mes");
+keys("k-cat", M.CATS.map(c => ({v:c, t:c})), "cat", "green");
+keys("k-turno", [{v:0,t:"Sin turnos"},{v:18,t:"18%"},{v:30,t:"30%"}], "turno");
+keys("k-titulo", [{v:0,t:"Sin título"},{v:3,t:"3%"},{v:6,t:"6%"}], "titulo");
+keys("k-empresaModo", [{v:"pct",t:"Porcentaje"},{v:"fijo",t:"Importe fijo"}], "empresaModo");
+keys("k-ganModo", [{v:"estimada",t:"Estimada"},{v:"manual",t:"Manual"},{v:"no",t:"No incluir"}], "ganModo");
+keys("k-pctHijos", [{v:100,t:"100%"},{v:50,t:"50%"}], "pctHijos");
 
+/* ---------- Inputs ---------- */
+TEXT_FIELDS.forEach(k => {
+  const el = $(k);
+  el.addEventListener("input", () => { RAW[k] = el.value; calc(); });
+  el.addEventListener("blur", () => { el.value = RAW[k]; });
+});
+BOOL_FIELDS.forEach(k => $(k).addEventListener("change", e => { S[k] = e.target.checked; calc(); }));
+document.querySelectorAll(".sbtn").forEach(b => b.addEventListener("click", () => {
+  const k = b.dataset.step, cur = parseInt(String(RAW[k]).replace(",","."),10) || 0;
+  const max = k === "ant" ? 50 : k === "feriados" ? 31 : 15;
+  RAW[k] = String(Math.min(max, Math.max(0, cur + Number(b.dataset.d))));
+  $(k).value = RAW[k]; calc();
+}));
+
+/* ---------- Sincronizar UI ---------- */
+function sync(){
+  [["k-mes","mes"],["k-cat","cat"],["k-turno","turno"],["k-titulo","titulo"],["k-empresaModo","empresaModo"],["k-ganModo","ganModo"],["k-pctHijos","pctHijos"]]
+    .forEach(([id,f]) => $(id).querySelectorAll(".key").forEach(b => {
+      const on = String(b.dataset.v) === String(S[f]);
+      b.classList.toggle("on", on); b.setAttribute("aria-checked", on);
+    }));
+  BOOL_FIELDS.forEach(k => $(k).checked = !!S[k]);
+  TEXT_FIELDS.forEach(k => { if (document.activeElement !== $(k)) $(k).value = RAW[k]; });
+  $("emp-pre").textContent = S.empresaModo === "pct" ? "%" : "$";
+  if (Number(String(RAW.empresaValor).replace(",",".")) > 0) $("adv-emp").open = true;
+  $("gan-est").style.display = S.ganModo === "estimada" ? "" : "none";
+  $("gan-man").style.display = S.ganModo === "manual" ? "" : "none";
+  // Textos dependientes del mes y categoría
+  const m = S.mes;
+  $("h-mes").textContent = m === "dic"
+    ? "Diciembre: todo remunerativo. Adicionales sobre el conformado."
+    : (m === "jul" || m === "ago" ? "Incremento NR del 10% sobre el conformado de junio." : "Incremento NR del 16% (10% + 6%) sobre el conformado de junio.");
+  $("s-pres").textContent = "Suma fija del mes: " + fmt0(M.PRES[m]);
+  const tieneRet = !!M.RET_MESES[m];
+  $("row-ret").classList.toggle("disabled", !tieneRet);
+  $("dRet").disabled = !tieneRet;
+  $("s-ret").textContent = tieneRet
+    ? `${M.RET_MESES[m]} · Cat. ${S.cat}: ${fmt0(M.RET_ART51[S.cat])}`
+    : "Solo en agosto (cuota 1) y septiembre (cuota 2).";
+  calc();
+}
+
+/* ---------- Cálculo y render ---------- */
+let ULT = null;
 function calc(){
-  const mes=document.getElementById("mes").value;
-  const cat=document.getElementById("cat").value;
-  const d=ESCALA[mes]; const basico=d[cat];
-  const ant=+document.getElementById("ant").value||0;
-  const empresaPct=(+document.getElementById("empresa").value||0)/100;
-
-  const antiguedad=basico*0.01*ant;
-  const turnos=basico*(turnoSel/100);
-  const titulo=basico*(tituloSel/100);
-  const empresa=basico*empresaPct;
-  const presentismo=document.getElementById("presentismo").checked?d.pres:0;
-  let adicFijos=0;
-  if(d.remunerativo) adicFijos=(d.adic1||0)+(d.adic2?d.adic2[cat]:0);
-
-  const haberes=[
-    {k:"Básico conformado",v:basico},
-    {k:`Antigüedad (${ant} años · 1%)`,v:antiguedad}
-  ];
-  if(turnoSel)haberes.push({k:`Turnos rotativos (${turnoSel}%)`,v:turnos});
-  if(tituloSel)haberes.push({k:`Título (${tituloSel}%)`,v:titulo});
-  if(empresa>0)haberes.push({k:"Adicional empresa",v:empresa});
-  if(adicFijos>0)haberes.push({k:"Adicionales de acuerdo",v:adicFijos});
-  if(presentismo)haberes.push({k:"Presentismo",v:presentismo});
-
-  const brutoRemun=basico+antiguedad+turnos+titulo+empresa+adicFijos+presentismo;
-
-  const divisor=172;
-  const valorHora=brutoRemun/divisor;
-  const he100q=+document.getElementById("he100").value||0;
-  const he50q=+document.getElementById("he50").value||0;
-  const feriados=+document.getElementById("feriados").value||0;
-  const montoHE100=valorHora*2*he100q;
-  const montoHE50=valorHora*1.5*he50q;
-  const montoFeriados=valorHora*2*8*feriados;
-  document.getElementById("vhora").textContent=
-    "Valor hora normal: "+fmt(valorHora)+"  ·  hora al 100%: "+fmt(valorHora*2);
-
-  if(montoHE50>0)haberes.push({k:`Horas extra 50% (${he50q}h)`,v:montoHE50});
-  if(montoHE100>0)haberes.push({k:`Horas extra 100% (${he100q}h)`,v:montoHE100});
-  if(montoFeriados>0)haberes.push({k:`Feriados trabajados (${feriados} jorn.)`,v:montoFeriados});
-
-  const totalExtras=montoHE100+montoHE50+montoFeriados;
-  const brutoConExtras=brutoRemun+totalExtras;
-
-  // El incremento NR "impacta adicionales": se aplica SOLO sobre básico + antigüedad
-  // + turnos + título + adicional empresa. El presentismo (suma fija) y las horas
-  // extra NO reciben el aumento.
-  const nrBase=basico+antiguedad+turnos+titulo+empresa;
-  const nrMonto=nrBase*d.nr;
-  if(d.nr>0)haberes.push({k:`Incremento NR (${(d.nr*100).toFixed(0)}%)`,v:nrMonto});
-  const totalBruto=brutoConExtras+nrMonto;
-
-  const ded=[]; const baseAportes=brutoConExtras;
-  let aportesLey=0;
-  if(document.getElementById("d_ley").checked){
-    const j=baseAportes*0.11, i=baseAportes*0.03, os=baseAportes*0.03;
-    ded.push({k:"Jubilación (11%)",v:j});
-    ded.push({k:"INSSJP / Ley 19032 (3%)",v:i});
-    ded.push({k:"Obra social (3%)",v:os});
-    aportesLey+=j+i+os;
+  const inp = Object.assign({}, S);
+  TEXT_FIELDS.forEach(k => inp[k] = RAW[k] === "" ? 0 : RAW[k]);
+  const r = M.calcular(inp);
+  document.querySelectorAll(".field.has-err").forEach(f => f.classList.remove("has-err"));
+  if (!r.ok){
+    r.errores.forEach(e => { const f = $("f-"+e.campo); if (f){ f.classList.add("has-err"); f.querySelector(".err-msg").textContent = e.msg; } });
+    renderError(r.errores); return;
   }
-  if(document.getElementById("d_soea").checked){
-    const cs=baseAportes*0.02, ss=baseAportes*0.015;
-    ded.push({k:"Cuota sindical SOEA (2%)",v:cs});
-    ded.push({k:"Seguro sepelio (1,5%)",v:ss});
-    aportesLey+=cs+ss;
-  }
-  if(document.getElementById("d_ret").checked && d.ret){
-    ded.push({k:"Retención 40% art.51",v:d.ret[cat]});
-  }
-  if(document.getElementById("d_gan").checked){
-    const casado=document.getElementById("casado").checked;
-    const hijos=+document.getElementById("hijos").value||0;
-    const netoSujeto=brutoConExtras - aportesLey;
-    const g=calcGanancias(netoSujeto,casado,hijos);
-    if(g>0) ded.push({k:"Impuesto a las Ganancias",v:g});
-    else ded.push({k:"Impuesto a las Ganancias",v:0,exento:true});
-  }
-
-  const totalDed=ded.reduce((a,b)=>a+(b.v||0),0);
-  const neto=totalBruto-totalDed;
-  render(d,cat,haberes,ded,totalBruto,totalDed,neto);
+  // Guardar los valores válidos
+  TEXT_FIELDS.forEach(k => S[k] = r.datos[k]);
+  try{ localStorage.setItem("soea_calc_v2", JSON.stringify(S)); }catch(e){}
+  $("vhora").textContent = "Valor hora: " + fmt(r.valorHora) + " · al 50%: " + fmt(r.valorHora*1.5) + " · al 100%: " + fmt(r.valorHora*2);
+  render(r);
 }
 
-function render(d,cat,haberes,ded,bruto,totalDed,neto){
-  const netoStr=neto.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
-  const [ent,cent]=netoStr.split(",");
-  let h=`<div class="top">
-      <div class="lbl">Neto estimado · ${d.nombre} · Cat. ${cat}</div>
-      <div class="neto">$ ${ent}<span class="cents">,${cent}</span></div>
-      <div class="sub">Bruto ${fmt(bruto)} − deducciones ${fmt(totalDed)}</div>
+function lines(arr, cls){
+  return arr.map(x => `<div class="ln ${cls}"><span class="k">${esc(x.k)}</span><span class="v">${fmt(x.v)}</span></div>`).join("");
+}
+function render(r){
+  const [ent, cen] = r.neto.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2}).split(",");
+  const rem = r.haberes.filter(x => x.t === "R"), nr = r.haberes.filter(x => x.t === "NR");
+  const total = r.totalR + r.totalNR || 1;
+  const pNeto = Math.max(0, r.neto) / total * 100, pDed = r.totalDed / total * 100;
+  const pR = r.totalR / total * 100, pNR = r.totalNR / total * 100;
+  const descs = r.ded.filter(x => x.g !== "gan"), gan = r.ded.find(x => x.g === "gan");
+  let h = `<div class="res-top">
+      <div class="lbl2">Neto estimado de bolsillo</div>
+      <div class="neto">$ ${ent}<span class="c">,${cen}</span></div>
+      <div class="res-pills"><span class="pill">${esc(r.mesNombre)}</span><span class="pill">Categoría ${esc(r.cat)}</span>${r.datos.turno?`<span class="pill">Turnos ${r.datos.turno}%</span>`:""}</div>
+      <div class="res-sub">Haberes ${fmt(r.bruto)} − descuentos ${fmt(r.totalDed)}</div>
     </div>
-    <div class="breakdown">
-      <div class="group-title">Haberes</div>`;
-  haberes.forEach(x=>h+=`<div class="ln add"><span class="k">${x.k}</span><span class="v">${fmt(x.v)}</span></div>`);
-  h+=`<div class="ln total"><span class="k">Total bruto</span><span class="v">${fmt(bruto)}</span></div>
-      <div class="group-title">Deducciones</div>`;
-  ded.forEach(x=>{
-    if(x.exento){
-      h+=`<div class="ln sub"><span class="k">${x.k}</span><span class="v" style="color:#9fc79a">Exento</span></div>`;
-    }else{
-      h+=`<div class="ln sub"><span class="k">${x.k}</span><span class="v">− ${fmt(x.v)}</span></div>`;
-    }
-  });
-  h+=`<div class="ln total"><span class="k">Total deducciones</span><span class="v">− ${fmt(totalDed)}</span></div>
-      <div class="ln total grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(neto)}</span></div>
+    <div class="compo">
+      <div class="bar" role="img" aria-label="Composición del sueldo"><i class="b1" style="width:${pR.toFixed(2)}%"></i><i class="b2" style="width:${pNR.toFixed(2)}%"></i></div>
+      <div class="legend"><span class="l1">Remunerativo ${pR.toFixed(0)}%</span><span class="l2">No remunerativo ${pNR.toFixed(0)}%</span><span class="l3">Descuentos ${pDed.toFixed(0)}% · neto ${pNeto.toFixed(0)}%</span></div>
     </div>
-    <div class="acciones">
-      <button type="button" class="b-wa" onclick="compartirWA()">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.71-.84-1.98-.94-.27-.1-.46-.15-.65.15-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.89-2.15-.23-.56-.47-.48-.65-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.15.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.71-.7 1.95-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34zM12.04 21.5h-.01a9.45 9.45 0 01-4.82-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.44 9.44 0 01-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 012.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.36 11.36 0 0012.04.5C5.76.5.65 5.61.65 11.89c0 2.01.53 3.98 1.53 5.71L.5 23.5l6.05-1.59a11.34 11.34 0 005.49 1.4h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.05z"/></svg>
-        Compartir por WhatsApp
-      </button>
-      <button type="button" class="b-copy" id="btnCopy" onclick="copiarRes()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        Copiar
-      </button>
+    <div class="bd">
+      <div class="gt"><span>Haberes remunerativos</span><span>${fmt(r.totalR)}</span></div>
+      ${lines(rem,"add")}`;
+  if (nr.length) h += `<div class="gt"><span>No remunerativos (acuerdo)</span><span>${fmt(r.totalNR)}</span></div>${lines(nr,"nr")}`;
+  h += `<div class="ln tot"><span class="k">Total haberes</span><span class="v">${fmt(r.bruto)}</span></div>
+      <div class="gt"><span>Descuentos</span><span></span></div>
+      ${descs.map(x => `<div class="ln sub"><span class="k">${esc(x.k)}</span><span class="v">− ${fmt(x.v)}</span></div>`).join("")}`;
+  if (gan){
+    h += gan.sinRetencion
+      ? `<div class="ln zero"><span class="k">Ganancias (estimada)</span><span class="v">Sin retención estimada</span></div>`
+      : `<div class="ln sub"><span class="k">${esc(gan.k)}</span><span class="v">− ${fmt(gan.v)}</span></div>`;
+  }
+  if (!r.ded.length) h += `<div class="ln zero"><span class="k">Sin descuentos seleccionados</span><span class="v">$ 0,00</span></div>`;
+  h += `<div class="ln tot"><span class="k">Total descuentos</span><span class="v">− ${fmt(r.totalDed)}</span></div>
+      <div class="ln tot grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(r.neto)}</span></div>
     </div>`;
-  ULTIMO={cat,nombre:d.nombre,neto:fmt(neto),bruto:fmt(bruto),totalDed:fmt(totalDed)};
-  const resEl=document.getElementById("result"); resEl.innerHTML=h; resEl.classList.remove("pulse"); void resEl.offsetWidth; resEl.classList.add("pulse");
+  if (r.topeAplicado) h += `<div class="note warn"><b>Tope ANSES aplicado:</b> jubilación, INSSJP y obra social se calculan hasta ${fmt(r.tope)}${r.topePendiente ? " (valor de octubre; el del mes aún no se publicó)" : ""}.</div>`;
+  if (gan && r.gan.modo === "estimada") h += `<div class="note"><b>Ganancias estimada:</b> supone el mismo sueldo todo el año con aguinaldo prorrateado. La retención real es acumulada y depende de tus deducciones en SiRADIG. Si la sabés, usá el modo manual.</div>`;
+  h += `<div class="acts">
+      <button type="button" class="btn3d b-wa" id="bWa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.71-.84-1.98-.94-.27-.1-.46-.15-.65.15-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.89-2.15-.23-.56-.47-.48-.65-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.15.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.71-.7 1.95-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34zM12.04 21.5h-.01a9.45 9.45 0 01-4.82-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.44 9.44 0 01-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 012.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.36 11.36 0 0012.04.5C5.76.5.65 5.61.65 11.89c0 2.01.53 3.98 1.53 5.71L.5 23.5l6.05-1.59a11.34 11.34 0 005.49 1.4h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.05z"/></svg>Compartir</button>
+      <button type="button" class="btn3d b-copy" id="bCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span>Copiar</span></button>
+    </div>`;
+  const el = $("result"); el.innerHTML = h;
+  el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse");
+  $("bWa").onclick = compartirWA; $("bCopy").onclick = copiar;
+  ULT = r;
+  $("mbar-l").textContent = "Neto · " + MES_CORTO[r.mes] + " · Cat. " + r.cat;
+  $("mbar-v").textContent = fmt0(r.neto);
+}
+function renderError(errs){
+  ULT = null;
+  $("result").innerHTML = `<div class="res-top"><div class="lbl2">Revisá los datos</div><div class="neto" style="font-size:1.6rem">Sin resultado</div></div>
+    <div class="err-box">${errs.map(e => "• " + esc(e.msg)).join("<br>")}<br><br>Corregí los campos marcados en rojo para ver el cálculo.</div>`;
+  $("mbar-v").textContent = "—";
 }
 
-let ULTIMO=null;
-const URL_APP="https://moro616.github.io/calculadora-soea/";
-function textoResultado(){
-  if(!ULTIMO) return "";
-  return `Calculé mi sueldo aceitero con la calculadora del SOEA San Lorenzo.\n`+
-    `• Período: ${ULTIMO.nombre}\n`+
-    `• Categoría: ${ULTIMO.cat}\n`+
-    `• Neto estimado de bolsillo: ${ULTIMO.neto}\n\n`+
-    `Calculá el tuyo acá: ${URL_APP}`;
+/* ---------- Compartir ---------- */
+const URL_APP = "https://moro616.github.io/calculadora-soea/";
+function texto(){
+  if (!ULT) return "";
+  return `Estimé mi sueldo aceitero con una calculadora independiente (no oficial):\n`+
+    `• ${ULT.mesNombre} · Categoría ${ULT.cat}\n• Neto estimado: ${fmt(ULT.neto)}\n\nCalculá el tuyo: ${URL_APP}`;
 }
-function compartirWA(){
-  const msg=textoResultado(); if(!msg) return;
-  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank","noopener");
+function compartirWA(){ const t = texto(); if (t) window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank","noopener"); }
+function copiar(){
+  const t = texto(); if (!t) return;
+  const b = $("bCopy");
+  const ok = () => { b.classList.add("ok"); b.querySelector("span").textContent = "¡Copiado!"; setTimeout(()=>{ b.classList.remove("ok"); b.querySelector("span").textContent = "Copiar"; },1800); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok).catch(()=>fb(t,ok)); else fb(t,ok);
 }
-function copiarRes(){
-  const msg=textoResultado(); if(!msg) return;
-  const btn=document.getElementById("btnCopy");
-  const ok=()=>{btn.classList.add("ok");btn.lastChild.textContent=" ¡Copiado!";
-    setTimeout(()=>{btn.classList.remove("ok");btn.lastChild.textContent=" Copiar";},1800);};
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(msg).then(ok).catch(()=>fallbackCopy(msg,ok));
-  }else fallbackCopy(msg,ok);
-}
-function fallbackCopy(txt,cb){
-  const ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";
-  ta.style.opacity="0";document.body.appendChild(ta);ta.select();
-  try{document.execCommand("copy");cb();}catch(e){}
-  document.body.removeChild(ta);
+function fb(t,cb){ const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");cb();}catch(e){} document.body.removeChild(ta); }
+
+/* ---------- Barra móvil ---------- */
+const mbar = $("mbar");
+$("mbar-b").addEventListener("click", () => $("resultado").scrollIntoView({behavior:"smooth",block:"start"}));
+if ("IntersectionObserver" in window){
+  new IntersectionObserver(es => es.forEach(e => mbar.classList.toggle("on", !e.isIntersecting)), {threshold:0.05}).observe($("result"));
 }
 
-["mes","cat","ant","empresa","he100","he50","feriados","presentismo","casado","hijos","d_ley","d_soea","d_ret","d_gan"]
-  .forEach(id=>{const el=document.getElementById(id);el.addEventListener("input",calc);el.addEventListener("change",calc);});
-calc();
-
-/* ===== Tema claro / oscuro ===== */
-function iconoTema(){
-  const t=document.documentElement.getAttribute("data-theme");
-  const b=document.getElementById("themeBtn");
-  if(b) b.textContent = t==="dark" ? "☀️" : "🌙";
-}
-function toggleTema(){
-  const actual=document.documentElement.getAttribute("data-theme")==="dark"?"dark":"light";
-  const nuevo=actual==="dark"?"light":"dark";
-  document.documentElement.setAttribute("data-theme",nuevo);
-  try{localStorage.setItem("tema",nuevo);}catch(e){}
+/* ---------- Tema ---------- */
+function iconoTema(){ $("themeBtn").textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙"; }
+$("themeBtn").addEventListener("click", () => {
+  const n = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", n);
+  try{ localStorage.setItem("tema", n); }catch(e){}
   iconoTema();
-}
+});
 iconoTema();
-// Si el usuario no eligió tema manualmente, seguir los cambios del sistema en vivo
-if(window.matchMedia){
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{
-    try{if(localStorage.getItem("tema"))return;}catch(_){}
-    document.documentElement.setAttribute("data-theme",e.matches?"dark":"light");
-    iconoTema();
+
+/* ---------- Clima (Open-Meteo, San Lorenzo, Santa Fe) ---------- */
+const WMO = c => c===0?["☀️","Despejado"]:c<=2?["🌤️","Algo nublado"]:c===3?["☁️","Nublado"]:c<=48?["🌫️","Niebla"]:c<=57?["🌦️","Llovizna"]:c<=67?["🌧️","Lluvia"]:c<=77?["🌨️","Nieve"]:c<=82?["🌧️","Chaparrones"]:["⛈️","Tormenta"];
+const wx = $("wx"), pop = $("wxPop");
+wx.addEventListener("click", e => { e.stopPropagation(); const on = !pop.classList.contains("on"); pop.classList.toggle("on", on); wx.setAttribute("aria-expanded", on); });
+document.addEventListener("click", e => { if (!pop.contains(e.target)) { pop.classList.remove("on"); wx.setAttribute("aria-expanded","false"); } });
+function cargarClima(){
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=-32.745&longitude=-60.737"+
+    "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,precipitation"+
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=3";
+  fetch(url).then(r => { if (!r.ok) throw 0; return r.json(); }).then(d => {
+    const c = d.current, [ico, txt] = WMO(c.weather_code);
+    wx.classList.remove("err");
+    wx.innerHTML = `<span class="ico">${ico}</span><span class="temp">${Math.round(c.temperature_2m)}°</span><span class="loc">San Lorenzo · ${txt}</span>`;
+    const dias = d.daily.time.map((t,i) => {
+      const f = new Date(t+"T12:00:00"), [di] = WMO(d.daily.weather_code[i]);
+      const n = i === 0 ? "Hoy" : f.toLocaleDateString("es-AR",{weekday:"short"});
+      return `<div class="wx-day"><b>${n}</b><span>${di}</span>${Math.round(d.daily.temperature_2m_max[i])}° / ${Math.round(d.daily.temperature_2m_min[i])}°<div class="muted" style="font-size:.68rem">💧 ${d.daily.precipitation_probability_max[i] ?? 0}%</div></div>`;
+    }).join("");
+    pop.innerHTML = `<div style="font-weight:800;font-family:Sora;margin-bottom:6px">${ico} ${txt} en San Lorenzo</div>
+      <div class="row"><span class="muted">Sensación térmica</span><b>${Math.round(c.apparent_temperature)}°</b></div>
+      <div class="row"><span class="muted">Humedad</span><b>${c.relative_humidity_2m}%</b></div>
+      <div class="row"><span class="muted">Viento</span><b>${Math.round(c.wind_speed_10m)} km/h</b></div>
+      <div class="wx-days">${dias}</div>
+      <div class="wx-src">Datos: Open-Meteo · se actualiza cada 30 min</div>`;
+  }).catch(() => {
+    wx.classList.add("err");
+    wx.innerHTML = `<span class="ico">🌡️</span><span class="loc">Clima no disponible</span>`;
+    pop.innerHTML = `<div class="muted">No se pudo cargar el clima. Probá más tarde.</div>`;
   });
 }
+cargarClima(); setInterval(cargarClima, 30*60*1000);
+
+sync();
+})();
 </script>
 </body>
 </html>
