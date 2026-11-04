@@ -389,6 +389,20 @@ footer{margin-top:28px;text-align:center}
 .copy{font-size:.74rem;color:var(--gris-2);margin-top:16px;line-height:1.7}
 .copy b{color:var(--gris)}
 
+/* ===== Aviso de actualización ===== */
+.upd{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);z-index:50;display:none;align-items:center;gap:12px;
+  width:calc(100% - 32px);max-width:440px;padding:12px 12px 12px 16px;border-radius:16px;color:#fff;font-size:.86rem;line-height:1.3;
+  background:linear-gradient(180deg,#1f9d55,#137a3e);border:1px solid rgba(255,255,255,.25);box-shadow:0 5px 0 #0b4d27,0 18px 36px -8px rgba(0,0,0,.5);animation:pop .3s ease}
+.upd.on{display:flex}
+.upd b{display:block;font-family:"Sora";font-size:.92rem}
+.upd button{flex:0 0 auto;border:none;border-radius:12px;padding:10px 14px;font-weight:800;font-size:.84rem;cursor:pointer;color:#0b4d27;
+  background:linear-gradient(180deg,#fff,#d8f5e3);box-shadow:0 1px 0 #fff inset,0 4px 0 #0b4d27}
+.upd button:active{transform:translateY(3px);box-shadow:0 1px 0 #fff inset,0 1px 0 #0b4d27}
+.upd .x{background:transparent;box-shadow:none;color:#d8f5e3;padding:6px 8px;font-size:1.1rem}
+.sac{position:relative;z-index:1;margin:0 22px 14px;padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.sac .h{font-family:"Sora";font-weight:800;font-size:.9rem;color:#fff;margin-bottom:8px}
+.sac .ln{padding:5px 0}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -604,6 +618,7 @@ footer{margin-top:28px;text-align:center}
         <p><b>Presentismo:</b> importe publicado del mes. De julio a noviembre la parte remunerativa es el presentismo de junio ($232.865, deducido de la tabla) y el resto es NR.</p>
         <p><b>Retención art. 51:</b> 40% del 10% de julio, en dos cuotas: agosto y septiembre.</p>
         <p><b>Aportes:</b> jubilación, INSSJP y obra social sobre lo remunerativo con el tope de ANSES del mes; cuota sindical y sepelio sobre lo remunerativo, sin tope. Las contribuciones del empleador no se descuentan.</p>
+        <p><b>Aguinaldo (diciembre):</b> 50% de la mayor remuneración remunerativa del semestre; se toma la de diciembre con lo que cargaste. Aportes de ley con tope ANSES del SAC (50% del tope mensual) y, si estás afiliado, cuota sindical y sepelio. Se muestra aparte del sueldo y sin Ganancias.</p>
         <p><b>Ganancias estimada:</b> se supone que el mes se repite todo el año, con aguinaldo prorrateado (13 sueldos), menos aportes y deducciones personales anuales 2026 de ARCA, y la escala del art. 94. Las sumas NR y las horas extra se consideran gravadas. La retención real es acumulada desde enero y puede incluir deducciones de SiRADIG (alquiler, prepaga, etc.); si la conocés, usá el modo manual.</p>
       </div>
     </details>
@@ -613,7 +628,9 @@ footer{margin-top:28px;text-align:center}
         <ul>
           <li>Si las sumas NR llevan obra social y cuota sindical: el comunicado no lo informa (opción configurable).</li>
           <li>Divisor del valor hora y conceptos que lo integran: no publicados en el comunicado.</li>
-          <li>Topes ANSES de noviembre y diciembre: aún no publicados; se usa el de octubre.</li>
+          <li>Tope ANSES de diciembre: aún no publicado; se usa el de noviembre.</li>
+          <li>Si las sumas NR de julio a noviembre entran en el aguinaldo: el comunicado no lo informa. No cambia el aguinaldo estimado (se toma diciembre, que es todo remunerativo); la estimación de Ganancias las incluye en el prorrateo de 13 sueldos.</li>
+          <li>Seguro de sepelio en Ganancias: se toma como deducible junto con los aportes; según cómo lo informe tu empleador puede tener tope.</li>
           <li>Tratamiento de horas extra y feriados en Ganancias: se consideran gravados.</li>
           <li>Las sumas fijas NR de mayo y junio se pagaron antes del 10/07 y no se incluyen.</li>
         </ul>
@@ -627,7 +644,7 @@ footer{margin-top:28px;text-align:center}
           <li>Escala salarial SOEA San Lorenzo 2026 (jul–dic), CCT 391/04: básicos, adicionales, presentismo y cuotas de retención.</li>
           <li><a href="https://www.afip.gob.ar/gananciasYBienes/ganancias/personas-humanas-sucesiones-indivisas/deducciones/documentos/Deducciones-personales-art-30-jul-dic-2026.pdf" target="_blank" rel="noopener">ARCA · Deducciones personales art. 30, jul–dic 2026</a>.</li>
           <li><a href="https://www.afip.gob.ar/gananciasYBienes/ganancias/personas-humanas-sucesiones-indivisas/declaracion-jurada/documentos/Tabla-Art-94-LIG-per-jul-a-dic-2026.pdf" target="_blank" rel="noopener">ARCA · Escala art. 94, jul–dic 2026</a>.</li>
-          <li>ANSES · base imponible máxima: Res. 186/2026 (jul), 232/2026 (ago), 257/2026 (sep), 284/2026 (oct).</li>
+          <li>ANSES · base imponible máxima: Res. 186/2026 (jul), 232/2026 (ago), 257/2026 (sep), 284/2026 (oct), 304/2026 (nov).</li>
           <li>Clima: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>.</li>
         </ul>
       </div>
@@ -665,6 +682,12 @@ footer{margin-top:28px;text-align:center}
     <div id="insPasos"></div>
     <button type="button" class="btn3d" id="insCerrar">Entendido</button>
   </div>
+</div>
+
+<div class="upd" id="upd" role="status" aria-live="polite">
+  <div style="flex:1;min-width:0"><b>Hay una versión nueva</b>Actualizá para ver la escala y los cálculos más recientes.</div>
+  <button type="button" id="updBtn">Actualizar</button>
+  <button type="button" class="x" id="updX" aria-label="Cerrar aviso">✕</button>
 </div>
 
 <div class="mbar" id="mbar">
@@ -768,7 +791,8 @@ function sync(){
 let ULT = null;
 function calc(){
   const inp = Object.assign({}, S);
-  TEXT_FIELDS.forEach(k => inp[k] = RAW[k] === "" ? 0 : RAW[k]);
+  // Vacío = 0, salvo divisor y horas de jornada, que vuelven a su valor por defecto
+  TEXT_FIELDS.forEach(k => inp[k] = String(RAW[k]).trim() === "" ? (k === "divisor" || k === "horasJornada" ? M.DEFAULTS[k] : 0) : RAW[k]);
   const r = M.calcular(inp);
   document.querySelectorAll(".field.has-err").forEach(f => f.classList.remove("has-err"));
   if (!r.ok){
@@ -818,7 +842,15 @@ function render(r){
   h += `<div class="ln tot"><span class="k">Total descuentos</span><span class="v">− ${fmt(r.totalDed)}</span></div>
       <div class="ln tot grand"><span class="k">Neto de bolsillo</span><span class="v">${fmt(r.neto)}</span></div>
     </div>`;
-  if (r.topeAplicado) h += `<div class="note warn"><b>Tope ANSES aplicado:</b> jubilación, INSSJP y obra social se calculan hasta ${fmt(r.tope)}${r.topePendiente ? " (valor de octubre; el del mes aún no se publicó)" : ""}.</div>`;
+  if (r.topeAplicado) h += `<div class="note warn"><b>Tope ANSES aplicado:</b> jubilación, INSSJP y obra social se calculan hasta ${fmt(r.tope)}${r.topePendiente ? " (se usa el de noviembre; el de diciembre aún no se publicó)" : ""}.</div>`;
+  if (r.sac){
+    const sc = r.sac;
+    h += `<div class="sac"><div class="h">🎁 Aguinaldo 2.º semestre (estimado)</div>
+      <div class="ln add"><span class="k">50% del remunerativo de diciembre</span><span class="v">${fmt(sc.bruto)}</span></div>
+      ${sc.ded.map(x => `<div class="ln sub"><span class="k">${esc(x.k)}</span><span class="v">− ${fmt(x.v)}</span></div>`).join("")}
+      <div class="ln tot"><span class="k">Aguinaldo neto</span><span class="v">${fmt(sc.neto)}</span></div>
+      <div class="hint" style="color:#c5d6f5;margin-top:6px">Se paga aparte (hasta el 18/12), no está sumado al neto de arriba. No incluye Ganancias${sc.topeAplicado ? `; aportes con tope SAC de ${fmt(sc.tope)}` : ""}. Si en otro mes del semestre cobraste más remunerativo, el aguinaldo sale de ese mes.</div></div>`;
+  }
   if (gan && r.gan.modo === "estimada") h += `<div class="note"><b>Ganancias estimada:</b> supone el mismo sueldo todo el año con aguinaldo prorrateado. La retención real es acumulada y depende de tus deducciones en SiRADIG. Si la sabés, usá el modo manual.</div>`;
   h += `<div class="acts">
       <button type="button" class="btn3d b-wa" id="bWa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.29-.15-1.71-.84-1.98-.94-.27-.1-.46-.15-.65.15-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.89-2.15-.23-.56-.47-.48-.65-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.15.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.71-.7 1.95-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34zM12.04 21.5h-.01a9.45 9.45 0 01-4.82-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.44 9.44 0 01-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.42 9.42 0 012.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.36 11.36 0 0012.04.5C5.76.5.65 5.61.65 11.89c0 2.01.53 3.98 1.53 5.71L.5 23.5l6.05-1.59a11.34 11.34 0 005.49 1.4h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.05z"/></svg>Compartir</button>
@@ -903,10 +935,49 @@ function cargarClima(){
 }
 cargarClima(); setInterval(cargarClima, 30*60*1000);
 
-/* ---------- Instalar como app (PWA) ---------- */
-if ("serviceWorker" in navigator && location.protocol === "https:") {
-  navigator.serviceWorker.register("sw.js").catch(() => {});
+/* ---------- Actualizaciones ----------
+   APP_VERSION debe coincidir con version.json (lo controla tests/motor.test.js).
+   Al publicar cambios: subir el número en los tres lugares (acá, version.json y sw.js). */
+const APP_VERSION = "2026.11.04";
+const upd = $("upd");
+let swReg = null, recargando = false;
+function mostrarUpd(){ upd.classList.add("on"); }
+function aplicarUpd(){
+  $("updBtn").disabled = true; $("updBtn").textContent = "Actualizando…";
+  const w = swReg && swReg.waiting;
+  if (w) { w.postMessage("SKIP_WAITING"); setTimeout(() => location.reload(), 2500); } // por si no llega controllerchange
+  else location.reload();
 }
+$("updBtn").addEventListener("click", aplicarUpd);
+$("updX").addEventListener("click", () => upd.classList.remove("on"));
+function buscarVersion(){
+  if (!navigator.onLine) return;
+  fetch("version.json?t=" + Date.now(), {cache:"no-store"})
+    .then(r => r.ok ? r.json() : null)
+    .then(j => { if (j && j.v && j.v !== APP_VERSION) mostrarUpd(); })
+    .catch(() => {});
+  if (swReg) swReg.update().catch(() => {});
+}
+if ("serviceWorker" in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    swReg = reg;
+    if (reg.waiting && navigator.serviceWorker.controller) mostrarUpd();
+    reg.addEventListener("updatefound", () => {
+      const w = reg.installing;
+      if (w) w.addEventListener("statechange", () => {
+        if (w.state === "installed" && navigator.serviceWorker.controller) mostrarUpd();
+      });
+    });
+  }).catch(() => {});
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (recargando) return; recargando = true; location.reload();
+  });
+}
+buscarVersion();
+setInterval(buscarVersion, 30*60*1000);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") buscarVersion(); });
+
+/* ---------- Instalar como app (PWA) ---------- */
 let promptInstalar = null;
 const standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
 const ua = navigator.userAgent || "";

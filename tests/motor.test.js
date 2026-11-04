@@ -150,6 +150,37 @@ check("coma decimal válida", M.calcular({ he50: "2,5" }).ok);
   check("cambio categoría limpio", f.neto === f2.neto && f.neto !== a.neto && f.basRem === M.CONF_JUN.F);
 }
 
+/* 11b. Tope ANSES de noviembre (Res. 304/2026) y diciembre pendiente */
+check("tope nov Res. 304/2026", M.TOPE.nov === 4861685.38);
+check("tope nov = oct × 1,0193", near(M.TOPE.oct * 1.0193, M.TOPE.nov, 0.01));
+check("nov no pendiente", !M.calcular({ mes: "nov" }).topePendiente);
+check("dic pendiente", M.calcular({ mes: "dic" }).topePendiente);
+
+/* 11c. Aguinaldo (solo diciembre) */
+{
+  check("sin aguinaldo fuera de dic", M.calcular({ mes: "nov", cat: "C" }).sac === null);
+  const r = M.calcular({ mes: "dic", cat: "C", ant: 5, presentismo: true, ganModo: "no" });
+  check("SAC = 50% remunerativo dic", near(r.sac.bruto, r.totalR / 2, 0.005));
+  const ley = r.sac.bruto * 0.17, soea = r.sac.bruto * 0.035;
+  check("SAC descuentos 17% + 3,5%", near(r.sac.totalDed, ley + soea, 0.05), `${r.sac.totalDed}`);
+  check("SAC neto concilia", near(r.sac.bruto - r.sac.totalDed, r.sac.neto, 0.005));
+  check("SAC no se suma al neto mensual", near(r.bruto - r.totalDed, r.neto, 0.005));
+  const big = M.calcular({ mes: "dic", cat: "F", ant: 40, turno: 30, titulo: 6, he100: 60, ganModo: "no" });
+  const j = big.sac.ded.find(x => x.k.startsWith("Jubilación"));
+  check("SAC con tope 50%", big.sac.topeAplicado && near(j.v, M.TOPE.dic * 0.5 * 0.11, 0.01));
+  const sinAf = M.calcular({ mes: "dic", cat: "A", dSoea: false, dLey: false, ganModo: "no" });
+  check("SAC sin descuentos", sinAf.sac.neto === sinAf.sac.bruto);
+}
+
+/* 11d. Versión de la app: index.html, version.json y sw.js deben coincidir */
+{
+  const raiz = path.join(__dirname, "..");
+  const vHtml = (fs.readFileSync(path.join(raiz, "index.html"), "utf8").match(/APP_VERSION = "([^"]+)"/) || [])[1];
+  const vJson = JSON.parse(fs.readFileSync(path.join(raiz, "version.json"), "utf8")).v;
+  const vSw = (fs.readFileSync(path.join(raiz, "sw.js"), "utf8").match(/VERSION = "([^"]+)"/) || [])[1];
+  check("versiones coinciden", vHtml && vHtml === vJson && vJson === vSw, `${vHtml} / ${vJson} / ${vSw}`);
+}
+
 /* 12. Diferencias de redondeo de diciembre: documentar */
 const difDic = M.CATS.map(c => ({ cat: c, componentes: M.DIC_BASICO[c] + M.DIC_ADIC_200514 + M.DIC_ADIC_150615[c], publicado: M.DIC_CONF_PUB[c] }))
   .map(x => ({ ...x, dif: x.componentes - x.publicado }));
