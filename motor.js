@@ -41,10 +41,10 @@
     ago: 4594798.23, // Res. ANSES 232/2026
     sep: 4691748.47, // Res. ANSES 257/2026
     oct: 4769631.49, // Res. ANSES 284/2026
-    nov: 4769631.49, // pendiente de publicación: se usa el de octubre
-    dic: 4769631.49  // pendiente de publicación: se usa el de octubre
+    nov: 4861685.38, // Res. ANSES 304/2026 (BO 28/10/2026, movilidad 1,93%)
+    dic: 4861685.38  // pendiente de publicación: se usa el de noviembre
   };
-  const TOPE_PENDIENTE = { nov: true, dic: true };
+  const TOPE_PENDIENTE = { dic: true };
 
   /* ---------- Ganancias 2026 (ARCA, valores anuales a diciembre) ---------- */
   const GAN = {
@@ -257,10 +257,34 @@
     const totalDed = r2(ded.reduce((a, x) => a + x.v, 0));
     const neto = r2(bruto - totalDed);
 
+    /* ---- Aguinaldo (SAC 2.º semestre), solo en diciembre ----
+       50% de la mayor remuneración mensual del semestre (LCT art. 121). En diciembre todo es
+       remunerativo y es el mes más alto de la escala, así que se toma el remunerativo de diciembre
+       con lo cargado (horas extra incluidas). Tope ANSES del SAC = 50% del tope mensual.
+       Ganancias del aguinaldo no se estima aparte (ya está prorrateada en el cálculo mensual). */
+    let sac = null;
+    if (esDic) {
+      const sBruto = r2(totalR * 0.5);
+      const sTope = r2(tope * 0.5);
+      const sDed = [];
+      if (d.dLey) {
+        const b = Math.min(sBruto, sTope);
+        sDed.push({ k: "Jubilación (11%)", v: r2(b * 0.11) });
+        sDed.push({ k: "INSSJP (3%)", v: r2(b * 0.03) });
+        sDed.push({ k: "Obra social (3%)", v: r2(b * 0.03) });
+      }
+      if (d.dSoea) {
+        sDed.push({ k: "Cuota sindical (2%)", v: r2(sBruto * 0.02) });
+        sDed.push({ k: "Seguro de sepelio (1,5%)", v: r2(sBruto * 0.015) });
+      }
+      const sTot = r2(sDed.reduce((a, x) => a + x.v, 0));
+      sac = { bruto: sBruto, ded: sDed, totalDed: sTot, neto: r2(sBruto - sTot), tope: sTope, topeAplicado: d.dLey && sBruto > sTope };
+    }
+
     return {
       ok: true, datos: d, mes, mesNombre: MES_NOMBRE[mes], cat,
       basRem, haberes, totalR, totalNR, bruto,
-      ded, totalDed, neto, gan,
+      ded, totalDed, neto, gan, sac,
       valorHora: r2(vhR + vhNR), tope, topePendiente: !!TOPE_PENDIENTE[mes],
       topeAplicado: d.dLey && (totalR > tope || (d.aportesNR && totalR + totalNR > tope))
     };
